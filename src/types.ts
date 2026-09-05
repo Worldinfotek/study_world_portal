@@ -25,7 +25,7 @@ export interface UserAccount {
   name: string;
   email: string;
   password?: string; // Optional legacy field - Plain text passwords are NEVER persisted to database
-  auth_provider?: 'firebase' | 'google' | 'email';
+  auth_provider?: 'google' | 'email';
   role: UserRole;
   status?: 'Active' | 'Inactive';
   export_permission: boolean;

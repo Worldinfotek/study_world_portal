@@ -744,7 +744,7 @@ export const UsersTeamView: React.FC<UsersTeamViewProps> = ({
                     </span>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-semibold text-stone-700 bg-white px-1.5 py-0.5 rounded border border-stone-200">
-                        {user.auth_provider === 'google' ? 'Google Auth' : 'Firebase Encrypted'}
+                        {user.auth_provider === 'google' ? 'Google Auth' : 'SQL / scrypt'}
                       </span>
                       {user.email && (
                         <button

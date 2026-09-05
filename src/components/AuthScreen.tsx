@@ -67,7 +67,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({
   }, [authMode]);
 
   // ==========================================================
-  // SIGN IN SUBMISSION HANDLER (Production Firebase Auth)
+  // SIGN IN SUBMISSION HANDLER
   // ==========================================================
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();

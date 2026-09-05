@@ -78,7 +78,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   if (!isOpen) return null;
 
   // ==========================================
-  // SIGN IN HANDLER (Production Firebase Auth)
+  // SIGN IN HANDLER
   // ==========================================
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();

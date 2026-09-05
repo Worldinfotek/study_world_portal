@@ -673,13 +673,13 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
               </span>
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                 <Shield className="w-3 h-3 text-emerald-600" />
-                Cloud SQL • Firebase • OAuth
+                SQL Server • OAuth
               </span>
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Google Workspace Integration</h1>
             <p className="text-sm text-slate-500 mt-1">
               {isSuperAdmin
-                ? 'Directly communicate via Gmail, schedule with Google Calendar & Meet, generate Google Docs dossiers, and sync live Google Sheets with Cloud SQL.'
+                ? 'Directly communicate via Gmail, schedule with Google Calendar & Meet, generate Google Docs dossiers, and sync live Google Sheets with SQL Server.'
                 : 'Directly communicate with students via Gmail, schedule appointments with Google Calendar, and host virtual counseling sessions with Google Meet.'}
             </p>
           </div>
@@ -858,7 +858,7 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
                 }`}
               >
                 <Database className="w-4 h-4 text-purple-600" />
-                <span>Cloud SQL (PostgreSQL)</span>
+                <span>SQL Server</span>
                 <span className="text-[10px] bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded font-bold">Admin</span>
               </button>
             </>
@@ -2211,7 +2211,7 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <Database className="w-5 h-5 text-purple-600" />
-                <h2 className="text-lg font-bold text-slate-900">Cloud SQL (PostgreSQL)</h2>
+                <h2 className="text-lg font-bold text-slate-900">SQL Server</h2>
               </div>
               <button
                 onClick={handleCheckDbStatus}
@@ -2257,27 +2257,23 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
           <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
             <div className="flex items-center gap-2 pb-3 border-b border-slate-100">
               <Shield className="w-5 h-5 text-amber-600" />
-              <h2 className="text-lg font-bold text-slate-900">Firebase Firestore & Security</h2>
+              <h2 className="text-lg font-bold text-slate-900">SQL Server & Security</h2>
             </div>
 
             <div className="space-y-3 text-xs">
               <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-600">Firestore Rules:</span>
+                <span className="text-slate-600">Database:</span>
                 <span className="font-semibold text-emerald-700 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> Deployed (v2)
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Microsoft SQL Server
                 </span>
               </div>
               <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
                 <span className="text-slate-600">Authentication:</span>
-                <span className="font-semibold text-slate-900">Firebase Auth + Google Workspace OAuth</span>
+                <span className="font-semibold text-slate-900">SQL login + scrypt password hash</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-600">Security Model:</span>
-                <span className="font-semibold text-slate-900">8 Pillars ABAC + RBAC Validation</span>
-              </div>
-              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
-                <span className="text-slate-600">Cloud Sync:</span>
-                <span className="font-semibold text-slate-900">Real-time onSnapshot Listeners</span>
+                <span className="text-slate-600">API access:</span>
+                <span className="font-semibold text-slate-900">Bearer session after sign-in</span>
               </div>
             </div>
           </div>
