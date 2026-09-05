@@ -3502,7 +3502,7 @@ async function createApp() {
     });
   }
   app.use(errorHandler);
-  await seedCatalogIfEmpty().catch((err) => {
+  void seedCatalogIfEmpty().catch((err) => {
     console.error("[SQL Server] Catalog seed failed:", err);
   });
   return app;
@@ -3511,18 +3511,34 @@ async function createApp() {
 // server.ts
 import_dotenv.default.config({ path: ".env.local", override: true });
 import_dotenv.default.config();
-var PORT = Number(process.env.PORT) || 3e3;
-if (!process.env.NODE_ENV && process.env.npm_lifecycle_event === "start") {
+if (process.env.IISNODE_VERSION) {
   process.env.NODE_ENV = "production";
+}
+function listenTarget() {
+  const raw = process.env.PORT;
+  if (raw && Number.isNaN(Number(raw))) {
+    return raw;
+  }
+  return Number(raw) || 3e3;
 }
 async function startServer() {
   const app = await createApp();
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Study World Server running on http://0.0.0.0:${PORT}`);
+  const port = listenTarget();
+  const onListening = () => {
+    const where = typeof port === "string" ? port : `http://0.0.0.0:${port}`;
+    console.log(`Study World Server running on ${where}`);
     console.log(
       `SQL Server: ${String(process.env.SQL_HOST || String.raw`(localdb)\\MSSQLLocalDB`).replace(/:0$/, "")} / ${process.env.SQL_DB_NAME || "study_world_portal"}`
     );
+  };
+  const server = typeof port === "string" ? app.listen(port, onListening) : app.listen(port, "0.0.0.0", onListening);
+  server.on("error", (err) => {
+    console.error("[server] listen failed:", err);
+    process.exit(1);
   });
 }
-startServer();
+startServer().catch((err) => {
+  console.error("[server] failed to start:", err);
+  process.exit(1);
+});
 //# sourceMappingURL=server.cjs.map

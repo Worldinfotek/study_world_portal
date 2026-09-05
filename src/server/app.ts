@@ -30,7 +30,8 @@ export async function createApp() {
 
   app.use(errorHandler);
 
-  await seedCatalogIfEmpty().catch((err) => {
+  // Do not await SQL here. iisnode must get a listen() immediately.
+  void seedCatalogIfEmpty().catch((err) => {
     console.error('[SQL Server] Catalog seed failed:', err);
   });
 

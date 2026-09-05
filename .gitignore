@@ -1,6 +1,7 @@
 node_modules/
 build/
 coverage/
+iisnode/
 .DS_Store
 *.log
 .env*
