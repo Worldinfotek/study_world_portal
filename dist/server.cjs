@@ -25,12 +25,69 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 
-// server.ts
+// src/server/loadEnv.ts
 var import_dotenv = __toESM(require("dotenv"), 1);
+var import_fs = __toESM(require("fs"), 1);
+var import_path = __toESM(require("path"), 1);
+var appRoot = process.cwd();
+var envFilePath = "";
+function unique(paths) {
+  return [...new Set(paths.filter(Boolean))];
+}
+function candidateDirs() {
+  return unique([
+    process.cwd(),
+    typeof __dirname === "string" ? __dirname : "",
+    typeof __dirname === "string" ? import_path.default.resolve(__dirname, "..") : ""
+  ]);
+}
+function stripQuotes(value) {
+  const trimmed = value.trim();
+  if (trimmed.startsWith('"') && trimmed.endsWith('"') || trimmed.startsWith("'") && trimmed.endsWith("'")) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+function getAppRoot() {
+  return appRoot;
+}
+function getEnvFilePath() {
+  return envFilePath;
+}
+function loadEnv() {
+  const names = [".env", ".env.local", ".env.txt", "env"];
+  for (const dir of candidateDirs()) {
+    for (const name of names) {
+      const file = import_path.default.join(dir, name);
+      if (!import_fs.default.existsSync(file) || !import_fs.default.statSync(file).isFile()) continue;
+      import_dotenv.default.config({ path: file, override: false });
+      if (!envFilePath) envFilePath = file;
+      appRoot = dir;
+    }
+  }
+  const pkg = import_path.default.join(appRoot, "package.json");
+  if (!import_fs.default.existsSync(pkg)) {
+    const parentPkg = import_path.default.join(appRoot, "..", "package.json");
+    if (import_fs.default.existsSync(parentPkg)) appRoot = import_path.default.resolve(appRoot, "..");
+  }
+  try {
+    if (import_fs.default.existsSync(import_path.default.join(appRoot, "package.json"))) {
+      process.chdir(appRoot);
+    }
+  } catch {
+  }
+  for (const key of ["SQL_HOST", "SQL_DB_NAME", "SQL_USER", "SQL_PASSWORD", "SQL_PORT"]) {
+    if (process.env[key]) process.env[key] = stripQuotes(String(process.env[key]));
+  }
+  if (process.env.IISNODE_VERSION) {
+    process.env.NODE_ENV = "production";
+  }
+  return envFilePath;
+}
 
 // src/server/app.ts
 var import_express7 = __toESM(require("express"), 1);
-var import_path = __toESM(require("path"), 1);
+var import_path2 = __toESM(require("path"), 1);
 
 // src/data/countriesData.ts
 var ALL_COUNTRIES_DATA = [
@@ -1695,7 +1752,7 @@ var HttpError = class extends Error {
 
 // src/db/mssql.ts
 function sqlServerName() {
-  return String(process.env.SQL_HOST || String.raw`(localdb)\MSSQLLocalDB`).replace(/:0$/, "");
+  return String(process.env.SQL_HOST || "").trim().replace(/:0$/, "");
 }
 function parseHost(host) {
   let server = host.trim();
@@ -1711,20 +1768,25 @@ function parseHost(host) {
     server = name;
     port = Number(portText) || void 0;
   }
+  const envPort = Number(process.env.SQL_PORT || "");
+  if (!port && Number.isFinite(envPort) && envPort > 0) port = envPort;
   return { server, instanceName, port };
 }
 function poolConfig() {
   const host = sqlServerName();
+  if (!host) {
+    throw new HttpError(503, "SQL_HOST is missing. Add it to the .env file in the site root.");
+  }
   const { server, instanceName, port } = parseHost(host);
   const user = String(process.env.SQL_USER || "").trim();
   const password = String(process.env.SQL_PASSWORD || "");
   const database = process.env.SQL_DB_NAME || "study_world_portal";
   const config = {
     server,
-    port,
+    port: port || (instanceName ? void 0 : 1433),
     database,
-    connectionTimeout: 6e4,
-    requestTimeout: 12e4,
+    connectionTimeout: 15e3,
+    requestTimeout: 3e4,
     options: {
       encrypt: false,
       trustServerCertificate: true,
@@ -1733,7 +1795,7 @@ function poolConfig() {
     }
   };
   if (!user || !password) {
-    throw new HttpError(503, "SQL_USER and SQL_PASSWORD are required for this database login.");
+    throw new HttpError(503, "SQL_USER and SQL_PASSWORD are missing. Add them to the .env file in the site root.");
   }
   config.user = user;
   config.password = password;
@@ -1743,7 +1805,16 @@ function sqlUnavailable(err) {
   const message = String(err?.message || err);
   const safe = message.replace(/Password=[^;]+/gi, "Password=***").slice(0, 400);
   console.error("[SQL Server]", safe);
-  if (/Cannot open database|RECOVERY_PENDING|not accessible|Login failed|ELOGIN|ETIMEOUT|ECONNREFUSED|getaddrinfo/i.test(message)) {
+  if (/Login failed|ELOGIN/i.test(message)) {
+    throw new HttpError(503, "SQL login failed. Check SQL_USER and SQL_PASSWORD in the site .env file.");
+  }
+  if (/ETIMEOUT|ECONNREFUSED|getaddrinfo|Failed to connect|ESOCKET/i.test(message)) {
+    throw new HttpError(
+      503,
+      "Cannot connect to SQL_HOST. If Plesk and SQL are on the same server, use 127.0.0.1. Otherwise use 74.50.79.178 and open port 1433."
+    );
+  }
+  if (/Cannot open database|RECOVERY_PENDING|not accessible/i.test(message)) {
     throw new HttpError(503, "SQL Server is temporarily unavailable. Please try again.");
   }
   throw new HttpError(503, "Could not query SQL Server. Please try again.");
@@ -3105,18 +3176,29 @@ var leads_routes_default = makeResourceRouter(leads_controller_exports, "leadId"
 var import_express5 = require("express");
 
 // src/services/health.service.ts
+function sqlConfigStatus() {
+  return {
+    host: sqlServerName() || "(not set)",
+    database: process.env.SQL_DB_NAME || "study_world_portal",
+    user: String(process.env.SQL_USER || "").trim() || "(not set)",
+    passwordSet: Boolean(String(process.env.SQL_PASSWORD || "").trim()),
+    envFile: getEnvFilePath() || "(not found)"
+  };
+}
 async function getHealth() {
   try {
     const sql2 = await testSqlConnection();
     return {
       status: "ok",
       sql: sql2,
+      config: sqlConfigStatus(),
       timestamp: (/* @__PURE__ */ new Date()).toISOString()
     };
   } catch (error) {
     return {
       status: "error",
       sql: { ok: false, error: error.message },
+      config: sqlConfigStatus(),
       timestamp: (/* @__PURE__ */ new Date()).toISOString()
     };
   }
@@ -3125,8 +3207,8 @@ async function getDatabaseStatus() {
   const tables = await getSqlTableCounts();
   return {
     success: true,
-    region: "localdb",
-    server: process.env.SQL_HOST || String.raw`(localdb)\MSSQLLocalDB`,
+    region: "sql",
+    server: sqlServerName() || "(not set)",
     database: process.env.SQL_DB_NAME || "study_world_portal",
     tables
   };
@@ -3494,11 +3576,11 @@ async function createApp() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = import_path.default.join(process.cwd(), "dist", "public");
+    const distPath = import_path2.default.join(getAppRoot(), "dist", "public");
     app.use(import_express7.default.static(distPath));
     app.get("*", (req, res, next) => {
       if (req.path.startsWith("/api")) return next();
-      res.sendFile(import_path.default.join(distPath, "index.html"));
+      res.sendFile(import_path2.default.join(distPath, "index.html"));
     });
   }
   app.use(errorHandler);
@@ -3509,11 +3591,7 @@ async function createApp() {
 }
 
 // server.ts
-import_dotenv.default.config({ path: ".env.local", override: true });
-import_dotenv.default.config();
-if (process.env.IISNODE_VERSION) {
-  process.env.NODE_ENV = "production";
-}
+loadEnv();
 function listenTarget() {
   const raw = process.env.PORT;
   if (raw && Number.isNaN(Number(raw))) {
@@ -3528,7 +3606,7 @@ async function startServer() {
     const where = typeof port === "string" ? port : `http://0.0.0.0:${port}`;
     console.log(`Study World Server running on ${where}`);
     console.log(
-      `SQL Server: ${String(process.env.SQL_HOST || String.raw`(localdb)\\MSSQLLocalDB`).replace(/:0$/, "")} / ${process.env.SQL_DB_NAME || "study_world_portal"}`
+      `SQL Server: ${String(process.env.SQL_HOST || "").trim() || "(not set)"} / ${process.env.SQL_DB_NAME || "study_world_portal"}`
     );
   };
   const server = typeof port === "string" ? app.listen(port, onListening) : app.listen(port, "0.0.0.0", onListening);

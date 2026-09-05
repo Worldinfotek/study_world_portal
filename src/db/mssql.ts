@@ -2,7 +2,7 @@ import sql from 'mssql';
 import { HttpError } from '../server/httpError.ts';
 
 export function sqlServerName(): string {
-  return String(process.env.SQL_HOST || String.raw`(localdb)\MSSQLLocalDB`).replace(/:0$/, '');
+  return String(process.env.SQL_HOST || '').trim().replace(/:0$/, '');
 }
 
 function parseHost(host: string): { server: string; instanceName?: string; port?: number } {
@@ -19,21 +19,26 @@ function parseHost(host: string): { server: string; instanceName?: string; port?
     server = name;
     port = Number(portText) || undefined;
   }
+  const envPort = Number(process.env.SQL_PORT || '');
+  if (!port && Number.isFinite(envPort) && envPort > 0) port = envPort;
   return { server, instanceName, port };
 }
 
 function poolConfig(): sql.config {
   const host = sqlServerName();
+  if (!host) {
+    throw new HttpError(503, 'SQL_HOST is missing. Add it to the .env file in the site root.');
+  }
   const { server, instanceName, port } = parseHost(host);
   const user = String(process.env.SQL_USER || '').trim();
   const password = String(process.env.SQL_PASSWORD || '');
   const database = process.env.SQL_DB_NAME || 'study_world_portal';
   const config: sql.config = {
     server,
-    port,
+    port: port || (instanceName ? undefined : 1433),
     database,
-    connectionTimeout: 60000,
-    requestTimeout: 120000,
+    connectionTimeout: 15000,
+    requestTimeout: 30000,
     options: {
       encrypt: false,
       trustServerCertificate: true,
@@ -42,7 +47,7 @@ function poolConfig(): sql.config {
     },
   };
   if (!user || !password) {
-    throw new HttpError(503, 'SQL_USER and SQL_PASSWORD are required for this database login.');
+    throw new HttpError(503, 'SQL_USER and SQL_PASSWORD are missing. Add them to the .env file in the site root.');
   }
   config.user = user;
   config.password = password;
@@ -53,7 +58,16 @@ function sqlUnavailable(err: unknown): never {
   const message = String((err as { message?: string })?.message || err);
   const safe = message.replace(/Password=[^;]+/gi, 'Password=***').slice(0, 400);
   console.error('[SQL Server]', safe);
-  if (/Cannot open database|RECOVERY_PENDING|not accessible|Login failed|ELOGIN|ETIMEOUT|ECONNREFUSED|getaddrinfo/i.test(message)) {
+  if (/Login failed|ELOGIN/i.test(message)) {
+    throw new HttpError(503, 'SQL login failed. Check SQL_USER and SQL_PASSWORD in the site .env file.');
+  }
+  if (/ETIMEOUT|ECONNREFUSED|getaddrinfo|Failed to connect|ESOCKET/i.test(message)) {
+    throw new HttpError(
+      503,
+      'Cannot connect to SQL_HOST. If Plesk and SQL are on the same server, use 127.0.0.1. Otherwise use 74.50.79.178 and open port 1433.'
+    );
+  }
+  if (/Cannot open database|RECOVERY_PENDING|not accessible/i.test(message)) {
     throw new HttpError(503, 'SQL Server is temporarily unavailable. Please try again.');
   }
   throw new HttpError(503, 'Could not query SQL Server. Please try again.');

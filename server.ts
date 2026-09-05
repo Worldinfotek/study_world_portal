@@ -1,12 +1,7 @@
-import dotenv from 'dotenv';
+import { loadEnv } from './src/server/loadEnv.ts';
 import { createApp } from './src/server/app.ts';
 
-dotenv.config({ path: '.env.local', override: true });
-dotenv.config();
-
-if (process.env.IISNODE_VERSION) {
-  process.env.NODE_ENV = 'production';
-}
+loadEnv();
 
 function listenTarget(): string | number {
   const raw = process.env.PORT;
@@ -23,7 +18,7 @@ async function startServer() {
     const where = typeof port === 'string' ? port : `http://0.0.0.0:${port}`;
     console.log(`Study World Server running on ${where}`);
     console.log(
-      `SQL Server: ${String(process.env.SQL_HOST || String.raw`(localdb)\\MSSQLLocalDB`).replace(/:0$/, '')} / ${process.env.SQL_DB_NAME || 'study_world_portal'}`
+      `SQL Server: ${String(process.env.SQL_HOST || '').trim() || '(not set)'} / ${process.env.SQL_DB_NAME || 'study_world_portal'}`
     );
   };
 

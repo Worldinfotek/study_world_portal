@@ -4,6 +4,7 @@ import { seedCatalogIfEmpty } from '../db/catalog.ts';
 import { apiAuthGate } from '../middleware/apiAuthGate.ts';
 import { errorHandler } from '../middleware/errorHandler.ts';
 import apiRouter from '../routes/index.ts';
+import { getAppRoot } from './loadEnv.ts';
 
 export async function createApp() {
   const app = express();
@@ -20,7 +21,7 @@ export async function createApp() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist', 'public');
+    const distPath = path.join(getAppRoot(), 'dist', 'public');
     app.use(express.static(distPath));
     app.get('*', (req, res, next) => {
       if (req.path.startsWith('/api')) return next();
