@@ -172,6 +172,10 @@ export async function seedCatalogIfEmpty(): Promise<void> {
   await seedIfEmpty('universities', INITIAL_UNIVERSITIES.map(universityUpsert));
   await seedIfEmpty('courses', INITIAL_COURSES.map(courseUpsert));
   await seedIfEmpty('import_history', INITIAL_IMPORT_HISTORY.map(importHistoryUpsert));
+  await mssqlExecute(`
+    IF COL_LENGTH('dbo.student_leads', 'payload_json') IS NULL
+      ALTER TABLE dbo.student_leads ADD payload_json NVARCHAR(MAX) NULL;
+  `).catch(() => {});
   await mssqlExecute(`UPDATE dbo.student_leads SET status = N'New Inquiry' WHERE status = N'New Lead'`).catch(() => {});
 }
 
@@ -558,8 +562,13 @@ export async function findSqlLeadById(leadId: string): Promise<any | null> {
   return rows[0] || null;
 }
 
+function clip(value: unknown, max: number, fallback = ''): string {
+  const text = String(value ?? '').trim();
+  return (text || fallback).slice(0, max);
+}
+
 export async function saveSqlLeadRecord(leadData: any): Promise<any> {
-  const leadId = leadData.id || `lead_${Date.now()}`;
+  const leadId = clip(leadData.id || `lead_${Date.now()}`, 64);
   const fullLead = { ...leadData, id: leadId, updated_at: new Date().toISOString() };
   await mssqlExecute(
     `MERGE dbo.student_leads AS t
@@ -605,30 +614,34 @@ export async function saveSqlLeadRecord(leadData: any): Promise<any> {
      );`,
     {
       leadId,
-      studentName: fullLead.student_name || 'Unknown student',
-      email: fullLead.student_email || fullLead.email || '',
-      phone: fullLead.student_phone || fullLead.phone || '',
-      city: fullLead.student_city || fullLead.city || '',
-      counselorId: fullLead.counselor_id || 'counselor_1',
-      counselorName: fullLead.counselor_name || 'Counselor',
-      counselorEmail: fullLead.counselor_email || '',
-      franchiseId: fullLead.franchise_id || 'ho',
-      franchiseName: fullLead.franchise_name || 'Head Office',
-      courseId: fullLead.course_id || '',
-      courseName: fullLead.course_name || '',
-      universityId: fullLead.university_id || '',
-      universityName: fullLead.university_name || '',
-      destinationCountry: fullLead.destination_country || '',
-      targetIntake: fullLead.target_intake || fullLead.intake || '',
-      academicScore: fullLead.academic_score || '',
-      englishTestScore: fullLead.english_test_score || fullLead.english_test || '',
-      status: fullLead.status === 'New Lead' ? 'New Inquiry' : fullLead.status || 'New Inquiry',
-      priority: fullLead.priority || 'Medium',
-      requestType: fullLead.request_type === 'Direct Admission' ? 'Course Application' : fullLead.request_type || 'Course Application',
-      notes: String(fullLead.notes || '').slice(0, 2000),
-      meetLink: fullLead.meet_link || '',
-      calendarEventId: fullLead.calendar_event_id || '',
-      googleDocId: fullLead.google_doc_id || '',
+      studentName: clip(fullLead.student_name, 128, 'Unknown student'),
+      email: clip(fullLead.student_email || fullLead.email, 256),
+      phone: clip(fullLead.student_phone || fullLead.phone, 64),
+      city: clip(fullLead.student_city || fullLead.city, 64),
+      counselorId: clip(fullLead.counselor_id, 128, 'counselor_1'),
+      counselorName: clip(fullLead.counselor_name, 128, 'Counselor'),
+      counselorEmail: clip(fullLead.counselor_email, 256),
+      franchiseId: clip(fullLead.franchise_id, 64, 'ho'),
+      franchiseName: clip(fullLead.franchise_name, 256, 'Head Office'),
+      courseId: clip(fullLead.course_id, 64, 'unassigned'),
+      courseName: clip(fullLead.course_name, 256, 'Unassigned'),
+      universityId: clip(fullLead.university_id, 64, 'unassigned'),
+      universityName: clip(fullLead.university_name, 256, 'Unassigned'),
+      destinationCountry: clip(fullLead.destination_country, 64, 'Unknown'),
+      targetIntake: clip(fullLead.target_intake || fullLead.intake, 64),
+      academicScore: clip(fullLead.academic_score, 64),
+      englishTestScore: clip(fullLead.english_test_score || fullLead.english_test, 64),
+      status: clip(fullLead.status === 'New Lead' ? 'New Inquiry' : fullLead.status, 64, 'New Inquiry'),
+      priority: clip(fullLead.priority, 32, 'Medium'),
+      requestType: clip(
+        fullLead.request_type === 'Direct Admission' ? 'Course Application' : fullLead.request_type,
+        64,
+        'Course Application'
+      ),
+      notes: clip(fullLead.notes, 2000),
+      meetLink: clip(fullLead.meet_link, 512),
+      calendarEventId: clip(fullLead.calendar_event_id, 128),
+      googleDocId: clip(fullLead.google_doc_id, 128),
       payloadJson: JSON.stringify(fullLead),
     }
   );

@@ -57,15 +57,14 @@ export async function fetchSqlLeads(): Promise<StudentLeadRequest[]> {
 }
 
 export async function saveSqlLead(lead: StudentLeadRequest): Promise<StudentLeadRequest> {
-  const hasId = Boolean(lead.id);
-  const res = await fetch(hasId ? `/api/leads/${encodeURIComponent(lead.id)}` : '/api/leads', {
-    method: hasId ? 'PUT' : 'POST',
+  const res = await fetch('/api/leads', {
+    method: 'POST',
     headers: authHeaders(),
     body: JSON.stringify(lead),
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || 'Failed to save lead to SQL Server');
+    const err = await res.json().catch(() => ({} as { error?: string }));
+    throw new Error(err.error || `Failed to save lead to SQL Server (${res.status})`);
   }
   const saved = await res.json();
   return asLead(saved) || lead;
