@@ -1,0 +1,6 @@
+{
+  "name": "Study World Consultant Search Portal",
+  "description": "Internal University & Course Search, Student Eligibility Evaluation, Role-Based Student Leads & Course Requests, and Google Workspace Hub (Gmail, Calendar, Meet, Tasks, Docs, Sheets) for Study World Consultant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
