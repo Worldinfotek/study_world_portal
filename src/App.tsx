@@ -558,6 +558,7 @@ export default function App() {
       />
 
       <CourseFormModal
+        key={editingCourse?.course_id || 'new-course'}
         isOpen={showCourseForm}
         onClose={() => {
           setShowCourseForm(false);
@@ -571,6 +572,7 @@ export default function App() {
       />
 
       <UniversityFormModal
+        key={editingUniversity?.university_id || 'new-university'}
         isOpen={showUniversityForm}
         onClose={() => {
           setShowUniversityForm(false);

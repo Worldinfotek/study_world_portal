@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { University, CountryMaster } from '../types';
 import { countryCodeFromValue } from '../utils/countryRef';
 import { X, Save, AlertCircle } from 'lucide-react';
@@ -20,33 +20,62 @@ export const UniversityFormModal: React.FC<UniversityFormModalProps> = ({
 }) => {
   const isEditing = !!initialUniversity;
 
-  const [uniId, setUniId] = useState(
-    initialUniversity?.university_id || `uni_${Date.now().toString(36)}`
-  );
-  const [name, setName] = useState(initialUniversity?.name || '');
-  const [country, setCountry] = useState(
-    countryCodeFromValue(initialUniversity?.country, countries) || countries[0]?.code || 'GB'
-  );
-  const [city, setCity] = useState(initialUniversity?.city || '');
-  const [campus, setCampus] = useState(initialUniversity?.campus || 'Main Campus');
-  const [website, setWebsite] = useState(initialUniversity?.website || 'https://www.');
+  const [uniId, setUniId] = useState('');
+  const [name, setName] = useState('');
+  const [country, setCountry] = useState('GB');
+  const [city, setCity] = useState('');
+  const [campus, setCampus] = useState('Main Campus');
+  const [website, setWebsite] = useState('https://www.');
   const [logoUrl, setLogoUrl] = useState(
-    initialUniversity?.logo_url ||
-      'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=160&auto=format&fit=crop&q=80'
+    'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=160&auto=format&fit=crop&q=80'
   );
-  const [email, setEmail] = useState(initialUniversity?.contact_info?.email || 'admissions@');
-  const [phone, setPhone] = useState(initialUniversity?.contact_info?.phone || '+44 ');
-  const [ranking, setRanking] = useState<number | undefined>(initialUniversity?.ranking || 350);
-  const [establishedYear, setEstablishedYear] = useState<number | undefined>(
-    initialUniversity?.established_year || 1965
-  );
-  const [status, setStatus] = useState<'Active' | 'Inactive'>(initialUniversity?.status || 'Active');
+  const [email, setEmail] = useState('admissions@');
+  const [phone, setPhone] = useState('+44 ');
+  const [ranking, setRanking] = useState<number | undefined>(350);
+  const [establishedYear, setEstablishedYear] = useState<number | undefined>(1965);
+  const [status, setStatus] = useState<'Active' | 'Inactive'>('Active');
   const [overview, setOverview] = useState(
-    initialUniversity?.overview ||
-      'Leading international university providing high quality education, research programs, and student employability support.'
+    'Leading international university providing high quality education, research programs, and student employability support.'
   );
-
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (!isOpen) return;
+    if (initialUniversity) {
+      setUniId(initialUniversity.university_id);
+      setName(initialUniversity.name || '');
+      setCountry(countryCodeFromValue(initialUniversity.country, countries) || countries[0]?.code || 'GB');
+      setCity(initialUniversity.city || '');
+      setCampus(initialUniversity.campus || '');
+      setWebsite(initialUniversity.website || '');
+      setLogoUrl(initialUniversity.logo_url || '');
+      setEmail(initialUniversity.contact_info?.email || '');
+      setPhone(initialUniversity.contact_info?.phone || '');
+      setRanking(initialUniversity.ranking);
+      setEstablishedYear(initialUniversity.established_year);
+      setStatus(initialUniversity.status || 'Active');
+      setOverview(initialUniversity.overview || '');
+    } else {
+      setUniId(`uni_${Date.now().toString(36)}`);
+      setName('');
+      setCountry(countries[0]?.code || 'GB');
+      setCity('');
+      setCampus('Main Campus');
+      setWebsite('https://www.');
+      setLogoUrl(
+        'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=160&auto=format&fit=crop&q=80'
+      );
+      setEmail('admissions@');
+      setPhone('+44 ');
+      setRanking(350);
+      setEstablishedYear(1965);
+      setStatus('Active');
+      setOverview(
+        'Leading international university providing high quality education, research programs, and student employability support.'
+      );
+    }
+    setErrorMessage('');
+  }, [isOpen, initialUniversity, countries]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

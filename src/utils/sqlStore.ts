@@ -62,23 +62,26 @@ function upsertBy<T>(list: T[], item: T, key: keyof T): T[] {
   return [item, ...list];
 }
 
-function collectionPath(collection: string, id: string): string {
-  const encoded = encodeURIComponent(id);
+function collectionRoot(collection: string): string {
   const map: Record<string, string> = {
-    universities: `/api/universities/${encoded}`,
-    courses: `/api/courses/${encoded}`,
-    countries: `/api/countries/${encoded}`,
-    programs: `/api/programs/${encoded}`,
-    franchises: `/api/franchises/${encoded}`,
-    import_history: `/api/import-history/${encoded}`,
-    meetings: `/api/meetings/${encoded}`,
+    universities: '/api/universities',
+    courses: '/api/courses',
+    countries: '/api/countries',
+    programs: '/api/programs',
+    franchises: '/api/franchises',
+    import_history: '/api/import-history',
+    meetings: '/api/meetings',
   };
-  return map[collection] || `/api/records/${encodeURIComponent(collection)}/${encoded}`;
+  return map[collection] || `/api/records/${encodeURIComponent(collection)}`;
 }
 
-async function putRecord(collection: string, id: string, record: unknown): Promise<void> {
-  const res = await fetch(collectionPath(collection, id), {
-    method: 'PUT',
+function collectionPath(collection: string, id: string): string {
+  return `${collectionRoot(collection)}/${encodeURIComponent(id)}`;
+}
+
+async function putRecord(collection: string, _id: string, record: unknown): Promise<void> {
+  const res = await fetch(collectionRoot(collection), {
+    method: 'POST',
     headers: authHeaders(),
     body: JSON.stringify(record),
   });

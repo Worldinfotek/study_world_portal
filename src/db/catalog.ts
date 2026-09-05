@@ -193,21 +193,23 @@ export async function resetAndSeedCatalog(): Promise<number> {
 
 function asUniversity(row: any): University | null {
   const parsed = parsePayload<University>(row);
-  if (parsed?.university_id) return parsed;
-  if (!row?.university_id) return null;
+  const id = parsed?.university_id || row?.university_id;
+  if (!id) return null;
   return {
-    university_id: row.university_id,
-    name: row.name || row.university_id,
-    country: row.country || '',
-    city: row.city || '',
-    campus: row.campus || '',
-    website: row.website_url || '',
-    logo_url: row.logo_url || '',
-    contact_info: { email: '', phone: '' },
-    status: row.status || 'Active',
-    ranking: row.ranking ?? undefined,
-    date_added: row.created_at || new Date().toISOString(),
-    last_updated: row.updated_at || new Date().toISOString(),
+    university_id: id,
+    name: parsed?.name || row.name || id,
+    country: parsed?.country || row.country || '',
+    city: parsed?.city || row.city || '',
+    campus: parsed?.campus || row.campus || '',
+    website: parsed?.website || row.website_url || '',
+    logo_url: parsed?.logo_url || row.logo_url || '',
+    contact_info: parsed?.contact_info || { email: '', phone: '' },
+    status: (parsed?.status || row.status || 'Active') as University['status'],
+    ranking: parsed?.ranking ?? row.ranking ?? undefined,
+    established_year: parsed?.established_year,
+    overview: parsed?.overview || '',
+    date_added: parsed?.date_added || row.created_at || new Date().toISOString(),
+    last_updated: parsed?.last_updated || row.updated_at || new Date().toISOString(),
   };
 }
 

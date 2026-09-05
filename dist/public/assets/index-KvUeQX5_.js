@@ -12708,22 +12708,24 @@ function upsertBy(list, item, key) {
   }
   return [item, ...list];
 }
-function collectionPath(collection, id) {
-  const encoded = encodeURIComponent(id);
+function collectionRoot(collection) {
   const map = {
-    universities: `/api/universities/${encoded}`,
-    courses: `/api/courses/${encoded}`,
-    countries: `/api/countries/${encoded}`,
-    programs: `/api/programs/${encoded}`,
-    franchises: `/api/franchises/${encoded}`,
-    import_history: `/api/import-history/${encoded}`,
-    meetings: `/api/meetings/${encoded}`
+    universities: "/api/universities",
+    courses: "/api/courses",
+    countries: "/api/countries",
+    programs: "/api/programs",
+    franchises: "/api/franchises",
+    import_history: "/api/import-history",
+    meetings: "/api/meetings"
   };
-  return map[collection] || `/api/records/${encodeURIComponent(collection)}/${encoded}`;
+  return map[collection] || `/api/records/${encodeURIComponent(collection)}`;
 }
-async function putRecord(collection, id, record) {
-  const res = await fetch(collectionPath(collection, id), {
-    method: "PUT",
+function collectionPath(collection, id) {
+  return `${collectionRoot(collection)}/${encodeURIComponent(id)}`;
+}
+async function putRecord(collection, _id, record) {
+  const res = await fetch(collectionRoot(collection), {
+    method: "POST",
     headers: authHeaders(),
     body: JSON.stringify(record)
   });
@@ -17255,32 +17257,63 @@ const UniversityFormModal = ({
   initialUniversity,
   countries
 }) => {
-  var _a, _b, _c;
   const isEditing = !!initialUniversity;
-  const [uniId, setUniId] = reactExports.useState(
-    (initialUniversity == null ? void 0 : initialUniversity.university_id) || `uni_${Date.now().toString(36)}`
-  );
-  const [name, setName] = reactExports.useState((initialUniversity == null ? void 0 : initialUniversity.name) || "");
-  const [country, setCountry] = reactExports.useState(
-    countryCodeFromValue(initialUniversity == null ? void 0 : initialUniversity.country, countries) || ((_a = countries[0]) == null ? void 0 : _a.code) || "GB"
-  );
-  const [city, setCity] = reactExports.useState((initialUniversity == null ? void 0 : initialUniversity.city) || "");
-  const [campus, setCampus] = reactExports.useState((initialUniversity == null ? void 0 : initialUniversity.campus) || "Main Campus");
-  const [website, setWebsite] = reactExports.useState((initialUniversity == null ? void 0 : initialUniversity.website) || "https://www.");
+  const [uniId, setUniId] = reactExports.useState("");
+  const [name, setName] = reactExports.useState("");
+  const [country, setCountry] = reactExports.useState("GB");
+  const [city, setCity] = reactExports.useState("");
+  const [campus, setCampus] = reactExports.useState("Main Campus");
+  const [website, setWebsite] = reactExports.useState("https://www.");
   const [logoUrl, setLogoUrl] = reactExports.useState(
-    (initialUniversity == null ? void 0 : initialUniversity.logo_url) || "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=160&auto=format&fit=crop&q=80"
+    "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=160&auto=format&fit=crop&q=80"
   );
-  const [email, setEmail] = reactExports.useState(((_b = initialUniversity == null ? void 0 : initialUniversity.contact_info) == null ? void 0 : _b.email) || "admissions@");
-  const [phone, setPhone] = reactExports.useState(((_c = initialUniversity == null ? void 0 : initialUniversity.contact_info) == null ? void 0 : _c.phone) || "+44 ");
-  const [ranking, setRanking] = reactExports.useState((initialUniversity == null ? void 0 : initialUniversity.ranking) || 350);
-  const [establishedYear, setEstablishedYear] = reactExports.useState(
-    (initialUniversity == null ? void 0 : initialUniversity.established_year) || 1965
-  );
-  const [status, setStatus] = reactExports.useState((initialUniversity == null ? void 0 : initialUniversity.status) || "Active");
+  const [email, setEmail] = reactExports.useState("admissions@");
+  const [phone, setPhone] = reactExports.useState("+44 ");
+  const [ranking, setRanking] = reactExports.useState(350);
+  const [establishedYear, setEstablishedYear] = reactExports.useState(1965);
+  const [status, setStatus] = reactExports.useState("Active");
   const [overview, setOverview] = reactExports.useState(
-    (initialUniversity == null ? void 0 : initialUniversity.overview) || "Leading international university providing high quality education, research programs, and student employability support."
+    "Leading international university providing high quality education, research programs, and student employability support."
   );
   const [errorMessage, setErrorMessage] = reactExports.useState("");
+  reactExports.useEffect(() => {
+    var _a, _b, _c, _d;
+    if (!isOpen) return;
+    if (initialUniversity) {
+      setUniId(initialUniversity.university_id);
+      setName(initialUniversity.name || "");
+      setCountry(countryCodeFromValue(initialUniversity.country, countries) || ((_a = countries[0]) == null ? void 0 : _a.code) || "GB");
+      setCity(initialUniversity.city || "");
+      setCampus(initialUniversity.campus || "");
+      setWebsite(initialUniversity.website || "");
+      setLogoUrl(initialUniversity.logo_url || "");
+      setEmail(((_b = initialUniversity.contact_info) == null ? void 0 : _b.email) || "");
+      setPhone(((_c = initialUniversity.contact_info) == null ? void 0 : _c.phone) || "");
+      setRanking(initialUniversity.ranking);
+      setEstablishedYear(initialUniversity.established_year);
+      setStatus(initialUniversity.status || "Active");
+      setOverview(initialUniversity.overview || "");
+    } else {
+      setUniId(`uni_${Date.now().toString(36)}`);
+      setName("");
+      setCountry(((_d = countries[0]) == null ? void 0 : _d.code) || "GB");
+      setCity("");
+      setCampus("Main Campus");
+      setWebsite("https://www.");
+      setLogoUrl(
+        "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=160&auto=format&fit=crop&q=80"
+      );
+      setEmail("admissions@");
+      setPhone("+44 ");
+      setRanking(350);
+      setEstablishedYear(1965);
+      setStatus("Active");
+      setOverview(
+        "Leading international university providing high quality education, research programs, and student employability support."
+      );
+    }
+    setErrorMessage("");
+  }, [isOpen, initialUniversity, countries]);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) {
@@ -35134,7 +35167,8 @@ function App() {
         universities,
         countries,
         programs
-      }
+      },
+      (editingCourse == null ? void 0 : editingCourse.course_id) || "new-course"
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       UniversityFormModal,
@@ -35147,7 +35181,8 @@ function App() {
         onSave: handleSaveUniversity,
         initialUniversity: editingUniversity,
         countries
-      }
+      },
+      (editingUniversity == null ? void 0 : editingUniversity.university_id) || "new-university"
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       LoginModal,
