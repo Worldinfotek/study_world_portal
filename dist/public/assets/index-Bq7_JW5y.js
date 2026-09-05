@@ -12655,10 +12655,13 @@ async function saveSqlLead(lead) {
   return asLead(saved) || lead;
 }
 async function deleteSqlLead(leadId) {
-  const res = await fetch(`/api/leads/${encodeURIComponent(leadId)}`, { method: "DELETE", headers: authHeaders() });
+  const res = await fetch(`/api/leads/${encodeURIComponent(leadId)}/delete`, {
+    method: "POST",
+    headers: authHeaders()
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || "Failed to delete lead from SQL Server");
+    throw new Error(err.error || `Failed to delete lead from SQL Server (${res.status})`);
   }
 }
 function countryCodeFromValue(value, countries) {
@@ -12730,8 +12733,8 @@ async function putRecord(collection, id, record) {
   }
 }
 async function removeRecord(collection, id) {
-  const res = await fetch(collectionPath(collection, id), {
-    method: "DELETE",
+  const res = await fetch(`${collectionPath(collection, id)}/delete`, {
+    method: "POST",
     headers: authHeaders()
   });
   if (!res.ok) {
@@ -12832,7 +12835,10 @@ async function saveUser(user) {
   cache.users = upsertBy(cache.users, safeUser, "id");
 }
 async function deleteUser(userId) {
-  const res = await fetch(`/api/users/${encodeURIComponent(userId)}`, { method: "DELETE", headers: authHeaders() });
+  const res = await fetch(`/api/users/${encodeURIComponent(userId)}/delete`, {
+    method: "POST",
+    headers: authHeaders()
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || "Failed to delete user");

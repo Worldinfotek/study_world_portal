@@ -17,6 +17,7 @@ export function makeResourceRouter(
   const router = Router();
   router.get('/', asyncHandler(controller.list));
   router.post('/', asyncHandler(controller.create));
+  router.post(`/:${idParam}/delete`, asyncHandler(controller.remove));
   router.get(`/:${idParam}`, asyncHandler(controller.getById));
   router.put(`/:${idParam}`, asyncHandler(controller.update));
   router.patch(`/:${idParam}`, asyncHandler(controller.update));

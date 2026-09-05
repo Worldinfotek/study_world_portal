@@ -71,9 +71,12 @@ export async function saveSqlLead(lead: StudentLeadRequest): Promise<StudentLead
 }
 
 export async function deleteSqlLead(leadId: string): Promise<void> {
-  const res = await fetch(`/api/leads/${encodeURIComponent(leadId)}`, { method: 'DELETE', headers: authHeaders() });
+  const res = await fetch(`/api/leads/${encodeURIComponent(leadId)}/delete`, {
+    method: 'POST',
+    headers: authHeaders(),
+  });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || 'Failed to delete lead from SQL Server');
+    const err = await res.json().catch(() => ({} as { error?: string }));
+    throw new Error(err.error || `Failed to delete lead from SQL Server (${res.status})`);
   }
 }

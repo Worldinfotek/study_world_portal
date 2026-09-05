@@ -3066,6 +3066,7 @@ router2.get("/lookup", asyncHandler(lookup));
 router2.get("/", asyncHandler(list2));
 router2.post("/", asyncHandler(create));
 router2.put("/", asyncHandler(save2));
+router2.post("/:id/delete", requireAdmin, asyncHandler(remove2));
 router2.get("/:id", asyncHandler(getById2));
 router2.put("/:id", asyncHandler(update));
 router2.patch("/:id", asyncHandler(update));
@@ -3175,6 +3176,7 @@ function makeResourceRouter(controller, idParam = "id") {
   const router6 = (0, import_express4.Router)();
   router6.get("/", asyncHandler(controller.list));
   router6.post("/", asyncHandler(controller.create));
+  router6.post(`/:${idParam}/delete`, asyncHandler(controller.remove));
   router6.get(`/:${idParam}`, asyncHandler(controller.getById));
   router6.put(`/:${idParam}`, asyncHandler(controller.update));
   router6.patch(`/:${idParam}`, asyncHandler(controller.update));

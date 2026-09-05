@@ -89,8 +89,8 @@ async function putRecord(collection: string, id: string, record: unknown): Promi
 }
 
 async function removeRecord(collection: string, id: string): Promise<void> {
-  const res = await fetch(collectionPath(collection, id), {
-    method: 'DELETE',
+  const res = await fetch(`${collectionPath(collection, id)}/delete`, {
+    method: 'POST',
     headers: authHeaders(),
   });
   if (!res.ok) {
@@ -243,7 +243,10 @@ export async function saveUser(user: UserAccount): Promise<void> {
 }
 
 export async function deleteUser(userId: string): Promise<void> {
-  const res = await fetch(`/api/users/${encodeURIComponent(userId)}`, { method: 'DELETE', headers: authHeaders() });
+  const res = await fetch(`/api/users/${encodeURIComponent(userId)}/delete`, {
+    method: 'POST',
+    headers: authHeaders(),
+  });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || 'Failed to delete user');

@@ -9,6 +9,7 @@ router.get('/lookup', asyncHandler(usersController.lookup));
 router.get('/', asyncHandler(usersController.list));
 router.post('/', asyncHandler(usersController.create));
 router.put('/', asyncHandler(usersController.save));
+router.post('/:id/delete', requireAdmin, asyncHandler(usersController.remove));
 router.get('/:id', asyncHandler(usersController.getById));
 router.put('/:id', asyncHandler(usersController.update));
 router.patch('/:id', asyncHandler(usersController.update));
