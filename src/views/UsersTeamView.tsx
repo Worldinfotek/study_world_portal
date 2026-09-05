@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { UserAccount, Franchise } from '../types';
 import { exportToCsv, printFormattedReport } from '../utils/exportUtils';
+import { ViewportOverlay } from '../components/ViewportOverlay';
 import {
   DEFAULT_CITIES_DATA,
   getAreasForCity,
@@ -823,7 +824,7 @@ export const UsersTeamView: React.FC<UsersTeamViewProps> = ({
 
       {/* MODAL: ADD / EDIT USER */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
+        <ViewportOverlay onBackdropClick={() => setShowModal(false)}>
           <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] my-8">
             <div className="px-6 py-4 bg-gradient-to-r from-[#88221D] to-[#701C18] text-white flex items-center justify-between">
               <div>
@@ -1447,12 +1448,12 @@ export const UsersTeamView: React.FC<UsersTeamViewProps> = ({
               </div>
             </form>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* ACTIVE DELETE CONFIRMATION MODAL */}
       {deleteTargetUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+        <ViewportOverlay onBackdropClick={() => setDeleteTargetUser(null)}>
           <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] p-6 space-y-4">
             <div className="flex items-center gap-3 text-rose-600">
               <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center">
@@ -1502,7 +1503,7 @@ export const UsersTeamView: React.FC<UsersTeamViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
     </div>
   );

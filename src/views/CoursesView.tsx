@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Course, University, UserAccount } from '../types';
 import { exportToCsv, printFormattedReport } from '../utils/exportUtils';
+import { ViewportOverlay } from '../components/ViewportOverlay';
 import {
   BookOpen,
   Search,
@@ -463,7 +464,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
 
       {/* Single Delete Confirmation Modal */}
       {courseToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+        <ViewportOverlay onBackdropClick={() => setCourseToDelete(null)}>
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0">
@@ -508,12 +509,12 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* Bulk Delete Confirmation Modal */}
       {showBulkDeleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+        <ViewportOverlay onBackdropClick={() => setShowBulkDeleteModal(false)}>
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0">
@@ -562,7 +563,7 @@ export const CoursesView: React.FC<CoursesViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
     </div>
   );

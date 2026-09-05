@@ -15749,6 +15749,28 @@ function generateSampleCsvTemplate(category) {
   }
   return rows.join("\r\n");
 }
+var reactDomExports = requireReactDom();
+function ViewportOverlay({
+  children,
+  className = "",
+  zClass = "z-50",
+  onBackdropClick
+}) {
+  return reactDomExports.createPortal(
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: `fixed inset-0 ${zClass} flex items-center justify-center overflow-y-auto overscroll-contain p-4 bg-black/60 backdrop-blur-xs ${className}`,
+        style: { position: "fixed", inset: 0, width: "100vw", height: "100dvh" },
+        onClick: (e) => {
+          if (e.target === e.currentTarget) onBackdropClick == null ? void 0 : onBackdropClick(e);
+        },
+        children
+      }
+    ),
+    document.body
+  );
+}
 const CourseDetailModal = ({
   course,
   university,
@@ -16106,7 +16128,7 @@ const CourseDetailModal = ({
             )
           ] })
         ] }),
-        showDeleteConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
+        showDeleteConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { zClass: "z-[60]", onBackdropClick: () => setShowDeleteConfirm(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "w-5 h-5" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
@@ -16462,7 +16484,7 @@ const UniversityDetailModal = ({
             )
           ] })
         ] }),
-        showDeleteConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
+        showDeleteConfirm && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { zClass: "z-[60]", onBackdropClick: () => setShowDeleteConfirm(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "w-5 h-5" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
@@ -16655,7 +16677,7 @@ const CourseFormModal = ({
     onClose();
   };
   if (!isOpen) return null;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       className: "relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden my-6 max-h-[90vh] flex flex-col",
@@ -17347,7 +17369,7 @@ const UniversityFormModal = ({
     onClose();
   };
   if (!isOpen) return null;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       className: "relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden my-6 max-h-[90vh] flex flex-col",
@@ -19171,495 +19193,488 @@ const StudentLeadModal = ({
     }
     onClose();
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: onClose, children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
-      id: "student-lead-modal-backdrop",
-      className: "fixed inset-0 z-50 overflow-y-auto bg-stone-900/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          id: "student-lead-modal-container",
-          className: "bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[92vh] animate-scale-in",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4.5 bg-gradient-to-r from-[#4A140F] via-[#7A2820] to-[#A8382C] text-white flex items-center justify-between flex-shrink-0", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2.5 rounded-xl bg-[#C9A227] text-stone-950 shadow-xs", children: /* @__PURE__ */ jsxRuntimeExports.jsx(UserPlus, { className: "w-5 h-5" }) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg sm:text-xl font-display font-bold", children: activeLead ? "Edit Student Lead / Request" : "Create Student Lead with Course" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-stone-200", children: "Staff Student Lead Generation & Application Tracking (SWC Portal)" })
-                ] })
+      id: "student-lead-modal-container",
+      className: "bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[92vh] animate-scale-in",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4.5 bg-gradient-to-r from-[#4A140F] via-[#7A2820] to-[#A8382C] text-white flex items-center justify-between flex-shrink-0", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2.5 rounded-xl bg-[#C9A227] text-stone-950 shadow-xs", children: /* @__PURE__ */ jsxRuntimeExports.jsx(UserPlus, { className: "w-5 h-5" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg sm:text-xl font-display font-bold", children: activeLead ? "Edit Student Lead / Request" : "Create Student Lead with Course" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-stone-200", children: "Staff Student Lead Generation & Application Tracking (SWC Portal)" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              id: "close-lead-modal-btn",
+              onClick: onClose,
+              className: "p-2 text-stone-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors",
+              children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5" })
+            }
+          )
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "overflow-y-auto p-6 space-y-6 flex-1 text-xs sm:text-sm text-stone-800", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3 p-4 rounded-xl bg-[#FBF6F1] border border-stone-200", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 font-bold text-[#7A2820] text-sm", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "w-4 h-4 text-[#A8382C]" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Selected Available Course" })
               ] }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "button",
                 {
-                  id: "close-lead-modal-btn",
-                  onClick: onClose,
-                  className: "p-2 text-stone-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors",
-                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5" })
+                  type: "button",
+                  id: "toggle-course-picker-btn",
+                  onClick: () => setShowCoursePicker(!showCoursePicker),
+                  className: "text-xs font-bold text-[#A8382C] hover:text-[#7A2820] underline",
+                  children: showCoursePicker ? "Hide Course Picker" : "Change / Select Different Course"
                 }
               )
             ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleSubmit, className: "overflow-y-auto p-6 space-y-6 flex-1 text-xs sm:text-sm text-stone-800", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3 p-4 rounded-xl bg-[#FBF6F1] border border-stone-200", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 font-bold text-[#7A2820] text-sm", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "w-4 h-4 text-[#A8382C]" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Selected Available Course" })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
-                    {
-                      type: "button",
-                      id: "toggle-course-picker-btn",
-                      onClick: () => setShowCoursePicker(!showCoursePicker),
-                      className: "text-xs font-bold text-[#A8382C] hover:text-[#7A2820] underline",
-                      children: showCoursePicker ? "Hide Course Picker" : "Change / Select Different Course"
-                    }
-                  )
+            currentSelectedCourse ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white p-4 rounded-xl border border-stone-200 shadow-2xs space-y-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-between gap-2", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FBF6F1] text-stone-800 border border-stone-200", children: currentSelectedCourse.program }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200", children: "Active Course" })
                 ] }),
-                currentSelectedCourse ? /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white p-4 rounded-xl border border-stone-200 shadow-2xs space-y-2", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-between gap-2", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FBF6F1] text-stone-800 border border-stone-200", children: currentSelectedCourse.program }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200", children: "Active Course" })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-sm text-[#A8382C]", children: [
-                      currentSelectedCourse.currency,
-                      " ",
-                      currentSelectedCourse.tuition_fee.toLocaleString(),
-                      " / year"
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-base font-display font-bold text-stone-900", children: currentSelectedCourse.course_name }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-3 text-xs text-stone-600", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-semibold text-stone-800 flex items-center gap-1", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(Building2, { className: "w-3.5 h-3.5 text-[#A8382C]" }),
-                      (currentSelectedUni == null ? void 0 : currentSelectedUni.name) || currentSelectedCourse.destination_country
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "w-3.5 h-3.5 text-stone-400" }),
-                      currentSelectedCourse.city,
-                      ", ",
-                      currentSelectedCourse.destination_country
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                      "Duration: ",
-                      currentSelectedCourse.duration,
-                      " ",
-                      currentSelectedCourse.duration_unit
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                      "Intakes: ",
-                      currentSelectedCourse.intake_months.join(", ")
-                    ] })
-                  ] })
-                ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-800 text-xs flex items-center gap-2", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { className: "w-4 h-4 flex-shrink-0" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "No course selected yet. Choose a course from below." })
-                ] }),
-                errors.course && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600 font-semibold", children: errors.course }),
-                showCoursePicker && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 space-y-3 pt-3 border-t border-stone-200", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { className: "w-4 h-4 absolute left-3 top-2.5 text-stone-400" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        placeholder: "Search available courses by name, university, or country...",
-                        value: courseSearchTerm,
-                        onChange: (e) => setCourseSearchTerm(e.target.value),
-                        className: "w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "max-h-48 overflow-y-auto space-y-1.5 border border-stone-200 rounded-xl p-2 bg-white divide-y divide-stone-100", children: filteredCoursesList.map((c) => {
-                    const uni = universities.find((u) => u.university_id === c.university_id);
-                    const isSelected = c.course_id === selectedCourseId;
-                    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "div",
-                      {
-                        onClick: () => {
-                          setSelectedCourseId(c.course_id);
-                          setIntake(c.intake_months[0] || "September 2026");
-                          setShowCoursePicker(false);
-                        },
-                        className: `p-2.5 rounded-lg cursor-pointer transition-colors flex items-center justify-between gap-3 text-xs ${isSelected ? "bg-amber-50 border border-[#C9A227]" : "hover:bg-stone-50"}`,
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
-                            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-stone-900 truncate", children: c.course_name }),
-                            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[11px] text-stone-500 truncate", children: [
-                              (uni == null ? void 0 : uni.name) || c.destination_country,
-                              " · ",
-                              c.city,
-                              ", ",
-                              c.destination_country,
-                              " (",
-                              c.program,
-                              ")"
-                            ] })
-                          ] }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right flex-shrink-0", children: [
-                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-[#A8382C] block", children: [
-                              c.currency,
-                              " ",
-                              c.tuition_fee.toLocaleString()
-                            ] }),
-                            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] text-stone-500", children: [
-                              "Intakes: ",
-                              c.intake_months.slice(0, 2).join(", ")
-                            ] })
-                          ] })
-                        ]
-                      },
-                      c.course_id
-                    );
-                  }) })
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-sm text-[#A8382C]", children: [
+                  currentSelectedCourse.currency,
+                  " ",
+                  currentSelectedCourse.tuition_fee.toLocaleString(),
+                  " / year"
                 ] })
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-200 pb-2", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(GraduationCap, { className: "w-4 h-4 text-[#A8382C]" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Student Personal & Academic Profile" })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-base font-display font-bold text-stone-900", children: currentSelectedCourse.course_name }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center gap-3 text-xs text-stone-600", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-semibold text-stone-800 flex items-center gap-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Building2, { className: "w-3.5 h-3.5 text-[#A8382C]" }),
+                  (currentSelectedUni == null ? void 0 : currentSelectedUni.name) || currentSelectedCourse.destination_country
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1 sm:col-span-2", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
-                      "Student Full Name ",
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        id: "student-name-input",
-                        placeholder: "e.g. Muhammad Bilal Khan",
-                        value: studentName,
-                        onChange: (e) => setStudentName(e.target.value),
-                        className: `w-full px-3 py-2 rounded-xl border bg-white focus:outline-none focus:border-[#A8382C] ${errors.name ? "border-rose-400 bg-rose-50/30" : "border-stone-300"}`
-                      }
-                    ),
-                    errors.name && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.name })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
-                      "Nationality / Country ",
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "select",
-                      {
-                        value: nationality,
-                        onChange: (e) => setNationality(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Pakistan", children: "🇵🇰 Pakistan" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "India", children: "🇮🇳 India" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Bangladesh", children: "🇧🇩 Bangladesh" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Nigeria", children: "🇳🇬 Nigeria" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "United Arab Emirates", children: "🇦🇪 United Arab Emirates" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Saudi Arabia", children: "🇸🇦 Saudi Arabia" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Sri Lanka", children: "🇱🇰 Sri Lanka" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Nepal", children: "🇳🇵 Nepal" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Ghana", children: "🇬🇭 Ghana" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Kenya", children: "🇰🇪 Kenya" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Other", children: "🌍 Other Country" })
-                        ]
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
-                      "Student Email ",
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "w-4 h-4 absolute left-3 top-2.5 text-stone-400" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "input",
-                        {
-                          type: "email",
-                          id: "student-email-input",
-                          placeholder: "student@example.com",
-                          value: studentEmail,
-                          onChange: (e) => setStudentEmail(e.target.value),
-                          className: `w-full pl-9 pr-3 py-2 rounded-xl border bg-white focus:outline-none focus:border-[#A8382C] ${errors.email ? "border-rose-400 bg-rose-50/30" : "border-stone-300"}`
-                        }
-                      )
-                    ] }),
-                    errors.email && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.email })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
-                      "Phone / WhatsApp ",
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "w-4 h-4 absolute left-3 top-2.5 text-stone-400" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "input",
-                        {
-                          type: "text",
-                          id: "student-phone-input",
-                          placeholder: "+92 300 1234567",
-                          value: studentPhone,
-                          onChange: (e) => setStudentPhone(e.target.value),
-                          className: `w-full pl-9 pr-3 py-2 rounded-xl border bg-white focus:outline-none focus:border-[#A8382C] ${errors.phone ? "border-rose-400 bg-rose-50/30" : "border-stone-300"}`
-                        }
-                      )
-                    ] }),
-                    errors.phone && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.phone })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "City of Residence" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        placeholder: "e.g. Lahore, Islamabad, Karachi",
-                        value: studentCity,
-                        onChange: (e) => setStudentCity(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Passport Number / CNIC" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        placeholder: "e.g. PK1234567",
-                        value: passportNo,
-                        onChange: (e) => setPassportNo(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Highest Qualification" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        placeholder: "e.g. FSc Pre-Eng, A-Levels, BBA",
-                        value: academicQualification,
-                        onChange: (e) => setAcademicQualification(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Academic Score / CGPA" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        placeholder: "e.g. 76% or 3.3 CGPA",
-                        value: academicScore,
-                        onChange: (e) => setAcademicScore(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "English Test / MOI" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        placeholder: "e.g. IELTS 6.5, PTE 62, or MOI",
-                        value: englishTest,
-                        onChange: (e) => setEnglishTest(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Study Gap (Years)" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "number",
-                        min: "0",
-                        max: "20",
-                        value: studyGapYears,
-                        onChange: (e) => setStudyGapYears(parseInt(e.target.value) || 0),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-200 pb-2", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(UserCheck, { className: "w-4 h-4 text-[#A8382C]" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Application Parameters & Counselor Assignment" })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "w-3.5 h-3.5 text-stone-400" }),
+                  currentSelectedCourse.city,
+                  ", ",
+                  currentSelectedCourse.destination_country
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Request Type" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "select",
-                      {
-                        value: requestType,
-                        onChange: (e) => setRequestType(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Course Application", children: "Course Application" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Lead Inquiry", children: "Lead Inquiry" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Pre-Assessment", children: "Pre-Assessment" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Offer Letter Request", children: "Offer Letter Request" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Visa Filing Assistance", children: "Visa Filing Assistance" })
-                        ]
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Lead Priority" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "select",
-                      {
-                        value: priority,
-                        onChange: (e) => setPriority(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "High", children: "🔥 High Priority" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Medium", children: "⚡ Medium Priority" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Low", children: "🌱 Low Priority" })
-                        ]
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Status" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "select",
-                      {
-                        value: status,
-                        onChange: (e) => setStatus(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "New Inquiry", children: "New Inquiry" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Under Assessment", children: "Under Assessment" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Documents Pending", children: "Documents Pending" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Application Submitted", children: "Application Submitted" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Conditional Offer", children: "Conditional Offer" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Unconditional Offer", children: "Unconditional Offer" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Visa Processing", children: "Visa Processing" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Enrolled", children: "Enrolled" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Closed / Rejected", children: "Closed / Rejected" })
-                        ]
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Target Intake" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "input",
-                      {
-                        type: "text",
-                        placeholder: "e.g. September 2026",
-                        value: intake,
-                        onChange: (e) => setIntake(e.target.value),
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                      }
-                    )
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1 sm:col-span-2 md:col-span-4", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
-                      "Assigned Counselor & Branch Scope ",
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "select",
-                      {
-                        value: assignedCounselorId,
-                        onChange: (e) => setAssignedCounselorId(e.target.value),
-                        disabled: currentUser.role === "Franchise Staff" || currentUser.role === "B-2-B",
-                        className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C] disabled:bg-stone-100 disabled:cursor-not-allowed",
-                        children: eligibleCounselors.map((counselor) => {
-                          const fr = counselor.franchise_id ? franchises.find((f) => f.id === counselor.franchise_id) : null;
-                          const scopeLabel = counselor.role === "B-2-B" ? "Independent B-2-B Partner" : fr ? `${fr.name} (${fr.code})` : "Head Office Central";
-                          return /* @__PURE__ */ jsxRuntimeExports.jsxs("option", { value: counselor.id, children: [
-                            counselor.name,
-                            " (",
-                            counselor.role,
-                            ") — ",
-                            scopeLabel
-                          ] }, counselor.id);
-                        })
-                      }
-                    ),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-stone-500 mt-1", children: currentUser.role === "Admin" ? "👑 Central Admin has full view and can assign to any counselor in the system." : currentUser.role === "Franchise Admin" ? "🏛️ Franchise Admin can assign to any counselor within their branch." : currentUser.role === "B-2-B" ? "🤝 Independent B-2-B Lead referral registered under your partner account." : "👤 Lead will be assigned to your counselor account." }),
-                    errors.counselor && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.counselor })
-                  ] })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                  "Duration: ",
+                  currentSelectedCourse.duration,
+                  " ",
+                  currentSelectedCourse.duration_unit
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Counseling Notes & Action Items" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "textarea",
-                    {
-                      rows: 3,
-                      placeholder: "Add student background notes, documents submitted, fee constraints, or special instructions...",
-                      value: notes,
-                      onChange: (e) => setNotes(e.target.value),
-                      className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                    }
-                  )
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                  "Intakes: ",
+                  currentSelectedCourse.intake_months.join(", ")
                 ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-3.5 rounded-xl bg-amber-50/80 border border-[#C9A227]/40 text-amber-900 flex items-start gap-2.5 text-xs", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { className: "w-4 h-4 text-[#C9A227] flex-shrink-0 mt-0.5" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { className: "font-bold text-stone-900 block", children: "Access & Visibility Security Policy Enforced" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                    "As per system rules, this student request will be viewable strictly by",
-                    " ",
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Main Admin" }),
-                    ", ",
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Head Office Staff" }),
-                    ",",
-                    " ",
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Related Counselor" }),
-                    ", and ",
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Its Franchise Admin" }),
-                    "."
-                  ] })
-                ] })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-end gap-3 pt-4 border-t border-stone-200", children: [
+              ] })
+            ] }) : /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-800 text-xs flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CircleAlert, { className: "w-4 h-4 flex-shrink-0" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "No course selected yet. Choose a course from below." })
+            ] }),
+            errors.course && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600 font-semibold", children: errors.course }),
+            showCoursePicker && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-3 space-y-3 pt-3 border-t border-stone-200", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { className: "w-4 h-4 absolute left-3 top-2.5 text-stone-400" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "button",
+                  "input",
                   {
-                    type: "button",
-                    onClick: onClose,
-                    className: "px-4 py-2 text-xs font-bold text-stone-700 hover:bg-stone-100 rounded-xl border border-stone-300 transition-colors",
-                    children: "Cancel"
+                    type: "text",
+                    placeholder: "Search available courses by name, university, or country...",
+                    value: courseSearchTerm,
+                    onChange: (e) => setCourseSearchTerm(e.target.value),
+                    className: "w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "max-h-48 overflow-y-auto space-y-1.5 border border-stone-200 rounded-xl p-2 bg-white divide-y divide-stone-100", children: filteredCoursesList.map((c) => {
+                const uni = universities.find((u) => u.university_id === c.university_id);
+                const isSelected = c.course_id === selectedCourseId;
+                return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "div",
+                  {
+                    onClick: () => {
+                      setSelectedCourseId(c.course_id);
+                      setIntake(c.intake_months[0] || "September 2026");
+                      setShowCoursePicker(false);
+                    },
+                    className: `p-2.5 rounded-lg cursor-pointer transition-colors flex items-center justify-between gap-3 text-xs ${isSelected ? "bg-amber-50 border border-[#C9A227]" : "hover:bg-stone-50"}`,
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-stone-900 truncate", children: c.course_name }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[11px] text-stone-500 truncate", children: [
+                          (uni == null ? void 0 : uni.name) || c.destination_country,
+                          " · ",
+                          c.city,
+                          ", ",
+                          c.destination_country,
+                          " (",
+                          c.program,
+                          ")"
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right flex-shrink-0", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-[#A8382C] block", children: [
+                          c.currency,
+                          " ",
+                          c.tuition_fee.toLocaleString()
+                        ] }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] text-stone-500", children: [
+                          "Intakes: ",
+                          c.intake_months.slice(0, 2).join(", ")
+                        ] })
+                      ] })
+                    ]
+                  },
+                  c.course_id
+                );
+              }) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-200 pb-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(GraduationCap, { className: "w-4 h-4 text-[#A8382C]" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Student Personal & Academic Profile" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1 sm:col-span-2", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
+                  "Student Full Name ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "text",
+                    id: "student-name-input",
+                    placeholder: "e.g. Muhammad Bilal Khan",
+                    value: studentName,
+                    onChange: (e) => setStudentName(e.target.value),
+                    className: `w-full px-3 py-2 rounded-xl border bg-white focus:outline-none focus:border-[#A8382C] ${errors.name ? "border-rose-400 bg-rose-50/30" : "border-stone-300"}`
                   }
                 ),
+                errors.name && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.name })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
+                  "Nationality / Country ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
+                ] }),
                 /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                  "button",
+                  "select",
                   {
-                    type: "submit",
-                    id: "submit-student-lead-btn",
-                    className: "px-6 py-2 text-xs font-bold text-white bg-[#A8382C] hover:bg-[#7A2820] rounded-xl shadow-md transition-all flex items-center gap-2",
+                    value: nationality,
+                    onChange: (e) => setNationality(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-4 h-4 text-[#C9A227]" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: activeLead ? "Save Changes" : "Create Student Lead" })
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Pakistan", children: "🇵🇰 Pakistan" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "India", children: "🇮🇳 India" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Bangladesh", children: "🇧🇩 Bangladesh" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Nigeria", children: "🇳🇬 Nigeria" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "United Arab Emirates", children: "🇦🇪 United Arab Emirates" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Saudi Arabia", children: "🇸🇦 Saudi Arabia" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Sri Lanka", children: "🇱🇰 Sri Lanka" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Nepal", children: "🇳🇵 Nepal" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Ghana", children: "🇬🇭 Ghana" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Kenya", children: "🇰🇪 Kenya" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Other", children: "🌍 Other Country" })
                     ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
+                  "Student Email ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "w-4 h-4 absolute left-3 top-2.5 text-stone-400" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "input",
+                    {
+                      type: "email",
+                      id: "student-email-input",
+                      placeholder: "student@example.com",
+                      value: studentEmail,
+                      onChange: (e) => setStudentEmail(e.target.value),
+                      className: `w-full pl-9 pr-3 py-2 rounded-xl border bg-white focus:outline-none focus:border-[#A8382C] ${errors.email ? "border-rose-400 bg-rose-50/30" : "border-stone-300"}`
+                    }
+                  )
+                ] }),
+                errors.email && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.email })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
+                  "Phone / WhatsApp ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "w-4 h-4 absolute left-3 top-2.5 text-stone-400" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "input",
+                    {
+                      type: "text",
+                      id: "student-phone-input",
+                      placeholder: "+92 300 1234567",
+                      value: studentPhone,
+                      onChange: (e) => setStudentPhone(e.target.value),
+                      className: `w-full pl-9 pr-3 py-2 rounded-xl border bg-white focus:outline-none focus:border-[#A8382C] ${errors.phone ? "border-rose-400 bg-rose-50/30" : "border-stone-300"}`
+                    }
+                  )
+                ] }),
+                errors.phone && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.phone })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "City of Residence" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "text",
+                    placeholder: "e.g. Lahore, Islamabad, Karachi",
+                    value: studentCity,
+                    onChange: (e) => setStudentCity(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Passport Number / CNIC" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "text",
+                    placeholder: "e.g. PK1234567",
+                    value: passportNo,
+                    onChange: (e) => setPassportNo(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Highest Qualification" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "text",
+                    placeholder: "e.g. FSc Pre-Eng, A-Levels, BBA",
+                    value: academicQualification,
+                    onChange: (e) => setAcademicQualification(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Academic Score / CGPA" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "text",
+                    placeholder: "e.g. 76% or 3.3 CGPA",
+                    value: academicScore,
+                    onChange: (e) => setAcademicScore(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "English Test / MOI" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "text",
+                    placeholder: "e.g. IELTS 6.5, PTE 62, or MOI",
+                    value: englishTest,
+                    onChange: (e) => setEnglishTest(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Study Gap (Years)" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "number",
+                    min: "0",
+                    max: "20",
+                    value: studyGapYears,
+                    onChange: (e) => setStudyGapYears(parseInt(e.target.value) || 0),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
                   }
                 )
               ] })
             ] })
-          ]
-        }
-      )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-200 pb-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(UserCheck, { className: "w-4 h-4 text-[#A8382C]" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Application Parameters & Counselor Assignment" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Request Type" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "select",
+                  {
+                    value: requestType,
+                    onChange: (e) => setRequestType(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Course Application", children: "Course Application" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Lead Inquiry", children: "Lead Inquiry" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Pre-Assessment", children: "Pre-Assessment" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Offer Letter Request", children: "Offer Letter Request" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Visa Filing Assistance", children: "Visa Filing Assistance" })
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Lead Priority" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "select",
+                  {
+                    value: priority,
+                    onChange: (e) => setPriority(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "High", children: "🔥 High Priority" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Medium", children: "⚡ Medium Priority" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Low", children: "🌱 Low Priority" })
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Status" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "select",
+                  {
+                    value: status,
+                    onChange: (e) => setStatus(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "New Inquiry", children: "New Inquiry" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Under Assessment", children: "Under Assessment" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Documents Pending", children: "Documents Pending" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Application Submitted", children: "Application Submitted" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Conditional Offer", children: "Conditional Offer" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Unconditional Offer", children: "Unconditional Offer" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Visa Processing", children: "Visa Processing" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Enrolled", children: "Enrolled" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Closed / Rejected", children: "Closed / Rejected" })
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Target Intake" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "input",
+                  {
+                    type: "text",
+                    placeholder: "e.g. September 2026",
+                    value: intake,
+                    onChange: (e) => setIntake(e.target.value),
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1 sm:col-span-2 md:col-span-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("label", { className: "font-semibold text-stone-700 block", children: [
+                  "Assigned Counselor & Branch Scope ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-rose-600", children: "*" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "select",
+                  {
+                    value: assignedCounselorId,
+                    onChange: (e) => setAssignedCounselorId(e.target.value),
+                    disabled: currentUser.role === "Franchise Staff" || currentUser.role === "B-2-B",
+                    className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C] disabled:bg-stone-100 disabled:cursor-not-allowed",
+                    children: eligibleCounselors.map((counselor) => {
+                      const fr = counselor.franchise_id ? franchises.find((f) => f.id === counselor.franchise_id) : null;
+                      const scopeLabel = counselor.role === "B-2-B" ? "Independent B-2-B Partner" : fr ? `${fr.name} (${fr.code})` : "Head Office Central";
+                      return /* @__PURE__ */ jsxRuntimeExports.jsxs("option", { value: counselor.id, children: [
+                        counselor.name,
+                        " (",
+                        counselor.role,
+                        ") — ",
+                        scopeLabel
+                      ] }, counselor.id);
+                    })
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-stone-500 mt-1", children: currentUser.role === "Admin" ? "👑 Central Admin has full view and can assign to any counselor in the system." : currentUser.role === "Franchise Admin" ? "🏛️ Franchise Admin can assign to any counselor within their branch." : currentUser.role === "B-2-B" ? "🤝 Independent B-2-B Lead referral registered under your partner account." : "👤 Lead will be assigned to your counselor account." }),
+                errors.counselor && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-rose-600", children: errors.counselor })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-1", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "font-semibold text-stone-700 block", children: "Counseling Notes & Action Items" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "textarea",
+                {
+                  rows: 3,
+                  placeholder: "Add student background notes, documents submitted, fee constraints, or special instructions...",
+                  value: notes,
+                  onChange: (e) => setNotes(e.target.value),
+                  className: "w-full px-3 py-2 rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                }
+              )
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-3.5 rounded-xl bg-amber-50/80 border border-[#C9A227]/40 text-amber-900 flex items-start gap-2.5 text-xs", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(Sparkles, { className: "w-4 h-4 text-[#C9A227] flex-shrink-0 mt-0.5" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { className: "font-bold text-stone-900 block", children: "Access & Visibility Security Policy Enforced" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                "As per system rules, this student request will be viewable strictly by",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Main Admin" }),
+                ", ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Head Office Staff" }),
+                ",",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Related Counselor" }),
+                ", and ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: "Its Franchise Admin" }),
+                "."
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-end gap-3 pt-4 border-t border-stone-200", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                onClick: onClose,
+                className: "px-4 py-2 text-xs font-bold text-stone-700 hover:bg-stone-100 rounded-xl border border-stone-300 transition-colors",
+                children: "Cancel"
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
+              {
+                type: "submit",
+                id: "submit-student-lead-btn",
+                className: "px-6 py-2 text-xs font-bold text-white bg-[#A8382C] hover:bg-[#7A2820] rounded-xl shadow-md transition-all flex items-center gap-2",
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "w-4 h-4 text-[#C9A227]" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: activeLead ? "Save Changes" : "Create Student Lead" })
+                ]
+              }
+            )
+          ] })
+        ] })
+      ]
     }
-  );
+  ) });
 };
 const AuthScreen = ({
   onLoginSuccess,
@@ -24380,369 +24395,362 @@ const StudentLeadsView = ({
         );
       }) })
     ),
-    selectedLead && /* @__PURE__ */ jsxRuntimeExports.jsx(
+    selectedLead && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setSelectedLead(null), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
       "div",
       {
-        id: "lead-detail-modal-backdrop",
-        className: "fixed inset-0 z-50 overflow-y-auto bg-stone-900/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5",
-        children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "div",
-          {
-            id: "lead-detail-modal-container",
-            className: "bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[92vh] animate-scale-in",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4.5 bg-gradient-to-r from-[#4A140F] via-[#7A2820] to-[#A8382C] text-white flex items-center justify-between flex-shrink-0", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2.5 rounded-xl bg-[#C9A227] text-stone-950 shadow-xs", children: /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { className: "w-5 h-5" }) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg sm:text-xl font-display font-bold", children: selectedLead.student_name }),
+        id: "lead-detail-modal-container",
+        className: "bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[92vh] animate-scale-in",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4.5 bg-gradient-to-r from-[#4A140F] via-[#7A2820] to-[#A8382C] text-white flex items-center justify-between flex-shrink-0", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2.5 rounded-xl bg-[#C9A227] text-stone-950 shadow-xs", children: /* @__PURE__ */ jsxRuntimeExports.jsx(FileText, { className: "w-5 h-5" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-lg sm:text-xl font-display font-bold", children: selectedLead.student_name }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: `px-2.5 py-0.5 rounded-full text-xs font-bold border ${getStatusBadge(
+                        selectedLead.status
+                      )}`,
+                      children: selectedLead.status
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-stone-200", children: [
+                  "Lead ID: #",
+                  selectedLead.id,
+                  " · Created ",
+                  selectedLead.created_at.slice(0, 10)
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                onClick: () => setSelectedLead(null),
+                className: "p-2 text-stone-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-5 h-5" })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "overflow-y-auto p-6 space-y-6 flex-1 text-xs sm:text-sm text-stone-800", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-[#FBF6F1] border border-stone-200 space-y-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-stone-500 uppercase tracking-wider block", children: "Admission Pipeline Progression" }),
+                !canEditLead && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-stone-500 bg-stone-200/80 px-2 py-0.5 rounded-full", children: "Status Managed by Admissions Counselor" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center gap-2", children: [
+                "New Inquiry",
+                "Under Assessment",
+                "Application Submitted",
+                "Conditional Offer",
+                "Unconditional Offer",
+                "Visa Processing",
+                "Enrolled"
+              ].map((stepStatus) => {
+                const isCurrent = selectedLead.status === stepStatus;
+                return /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "button",
+                  {
+                    type: "button",
+                    disabled: !canEditLead,
+                    onClick: () => canEditLead && handleQuickStatusChange(stepStatus),
+                    className: `px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${isCurrent ? "bg-[#A8382C] text-white border-[#A8382C] shadow-xs" : "bg-white text-stone-700 hover:bg-stone-100 border-stone-300"} ${!canEditLead ? "cursor-default opacity-85" : ""}`,
+                    children: stepStatus
+                  },
+                  stepStatus
+                );
+              }) })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-100 pb-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(GraduationCap, { className: "w-4 h-4 text-[#A8382C]" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Student Academic Dossier" })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-2.5 text-xs", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Email Address" }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        "span",
+                        "a",
                         {
-                          className: `px-2.5 py-0.5 rounded-full text-xs font-bold border ${getStatusBadge(
-                            selectedLead.status
-                          )}`,
-                          children: selectedLead.status
+                          href: `mailto:${selectedLead.student_email}`,
+                          className: "font-bold text-stone-800 hover:text-[#A8382C] truncate block",
+                          children: selectedLead.student_email
                         }
                       )
                     ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-stone-200", children: [
-                      "Lead ID: #",
-                      selectedLead.id,
-                      " · Created ",
-                      selectedLead.created_at.slice(0, 10)
-                    ] })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "button",
-                  {
-                    onClick: () => setSelectedLead(null),
-                    className: "p-2 text-stone-300 hover:text-white hover:bg-white/10 rounded-xl transition-colors",
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "w-5 h-5" })
-                  }
-                )
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "overflow-y-auto p-6 space-y-6 flex-1 text-xs sm:text-sm text-stone-800", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-[#FBF6F1] border border-stone-200 space-y-3", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-stone-500 uppercase tracking-wider block", children: "Admission Pipeline Progression" }),
-                    !canEditLead && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-stone-500 bg-stone-200/80 px-2 py-0.5 rounded-full", children: "Status Managed by Admissions Counselor" })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center gap-2", children: [
-                    "New Inquiry",
-                    "Under Assessment",
-                    "Application Submitted",
-                    "Conditional Offer",
-                    "Unconditional Offer",
-                    "Visa Processing",
-                    "Enrolled"
-                  ].map((stepStatus) => {
-                    const isCurrent = selectedLead.status === stepStatus;
-                    return /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "button",
-                      {
-                        type: "button",
-                        disabled: !canEditLead,
-                        onClick: () => canEditLead && handleQuickStatusChange(stepStatus),
-                        className: `px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${isCurrent ? "bg-[#A8382C] text-white border-[#A8382C] shadow-xs" : "bg-white text-stone-700 hover:bg-stone-100 border-stone-300"} ${!canEditLead ? "cursor-default opacity-85" : ""}`,
-                        children: stepStatus
-                      },
-                      stepStatus
-                    );
-                  }) })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-100 pb-2", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(GraduationCap, { className: "w-4 h-4 text-[#A8382C]" }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Student Academic Dossier" })
-                      ] }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-2.5 text-xs", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Email Address" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(
-                            "a",
-                            {
-                              href: `mailto:${selectedLead.student_email}`,
-                              className: "font-bold text-stone-800 hover:text-[#A8382C] truncate block",
-                              children: selectedLead.student_email
-                            }
-                          )
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Phone / WhatsApp" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(
-                            "a",
-                            {
-                              href: `https://wa.me/${selectedLead.student_phone.replace(/[^0-9]/g, "")}`,
-                              target: "_blank",
-                              rel: "noreferrer",
-                              className: "font-bold text-emerald-700 hover:underline flex items-center gap-1 truncate",
-                              children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: selectedLead.student_phone })
-                            }
-                          )
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Nationality & City" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-semibold text-stone-800", children: [
-                            selectedLead.nationality,
-                            " (",
-                            selectedLead.student_city || "N/A",
-                            ")"
-                          ] })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Passport / CNIC" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.passport_no || "Not submitted yet" })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Qualification" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.academic_qualification || "N/A" })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Academic Score" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-stone-900", children: selectedLead.academic_score || "N/A" })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "English Proficiency" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.english_test || "N/A" })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Study Gap" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.study_gap_years ? `${selectedLead.study_gap_years} Years` : "None" })
-                        ] })
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between border-b border-stone-100 pb-2", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2", children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "w-4 h-4 text-[#A8382C]" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Requested Degree Program" })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                          "button",
-                          {
-                            onClick: () => {
-                              const crs = courses.find((c) => c.course_id === selectedLead.course_id) || courses.find(
-                                (c) => {
-                                  var _a, _b, _c, _d;
-                                  return ((_a = c.course_name) == null ? void 0 : _a.trim().toLowerCase()) === ((_b = selectedLead.course_name) == null ? void 0 : _b.trim().toLowerCase()) && (!selectedLead.destination_country || ((_c = c.destination_country) == null ? void 0 : _c.trim().toLowerCase()) === ((_d = selectedLead.destination_country) == null ? void 0 : _d.trim().toLowerCase()));
-                                }
-                              ) || courses.find(
-                                (c) => {
-                                  var _a, _b;
-                                  return ((_a = c.course_name) == null ? void 0 : _a.trim().toLowerCase()) === ((_b = selectedLead.course_name) == null ? void 0 : _b.trim().toLowerCase());
-                                }
-                              );
-                              if (crs) {
-                                onSelectCourse(crs);
-                              } else {
-                                onSelectCourse({
-                                  course_id: selectedLead.course_id || `course_${selectedLead.id}`,
-                                  university_id: selectedLead.university_id || "uni_snapshot",
-                                  course_name: selectedLead.course_name,
-                                  program: selectedLead.program_level || "Postgraduate",
-                                  duration: 1,
-                                  duration_unit: "years",
-                                  tuition_fee: selectedLead.tuition_fee,
-                                  currency: selectedLead.currency,
-                                  intake_months: [selectedLead.intake || "September 2026"],
-                                  destination_country: selectedLead.destination_country,
-                                  city: selectedLead.city,
-                                  is_active: true,
-                                  academic_requirements: { min_qualification: selectedLead.academic_qualification || "Degree" },
-                                  english_requirements: { minimum_score: selectedLead.english_test || "6.0" }
-                                });
-                              }
-                            },
-                            className: "text-xs font-bold text-[#A8382C] hover:underline flex items-center gap-1",
-                            children: [
-                              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Full Specs" }),
-                              /* @__PURE__ */ jsxRuntimeExports.jsx(ExternalLink, { className: "w-3 h-3" })
-                            ]
-                          }
-                        )
-                      ] }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "font-display font-bold text-sm text-stone-900", children: selectedLead.course_name }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-stone-600 flex items-center gap-1.5 mt-0.5", children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(Building2, { className: "w-3.5 h-3.5 text-[#A8382C]" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold", children: selectedLead.university_name }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-                            selectedLead.city,
-                            ", ",
-                            selectedLead.destination_country
-                          ] })
-                        ] })
-                      ] }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-2 text-xs bg-[#FBF6F1] p-2.5 rounded-xl border border-stone-100", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-500 font-semibold block", children: "Annual Tuition" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-sm text-[#A8382C]", children: [
-                            selectedLead.currency,
-                            " ",
-                            selectedLead.tuition_fee.toLocaleString()
-                          ] })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-500 font-semibold block", children: "Target Intake" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-stone-800", children: selectedLead.intake })
-                        ] })
-                      ] })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-2 text-xs", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-stone-500 uppercase tracking-wider block", children: "Lead Assignment & Branch Ownership" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-stone-900 text-sm", children: selectedLead.counselor_name }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-stone-500 text-[11px]", children: [
-                            "Role: ",
-                            selectedLead.counselor_role,
-                            " · ",
-                            selectedLead.counselor_email
-                          ] })
-                        ] }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-2.5 py-1 rounded-xl bg-[#FBF6F1] font-bold text-stone-800 border border-stone-200", children: selectedLead.franchise_name || "Head Office Central" })
-                      ] }),
-                      selectedLead.notes && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-3 bg-stone-50 rounded-xl border border-stone-100 mt-2", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-semibold text-stone-500 uppercase tracking-wider block", children: "Counselor Remarks:" }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-stone-700 text-xs mt-0.5", children: selectedLead.notes })
-                      ] })
-                    ] }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-100 pb-2", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { className: "w-4 h-4 text-[#A8382C]" }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Activity Log & Counseling Timeline" })
-                      ] }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleAddTimelineNote, className: "flex gap-2", children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(
-                          "input",
-                          {
-                            type: "text",
-                            placeholder: "Add counseling note or application update...",
-                            value: newTimelineComment,
-                            onChange: (e) => setNewTimelineComment(e.target.value),
-                            className: "flex-1 px-3 py-1.5 text-xs rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
-                          }
-                        ),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(
-                          "button",
-                          {
-                            type: "submit",
-                            disabled: !newTimelineComment.trim(),
-                            className: "px-3 py-1.5 bg-[#A8382C] text-white text-xs font-bold rounded-xl hover:bg-[#7A2820] disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
-                            children: "Post Note"
-                          }
-                        )
-                      ] }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2.5 max-h-48 overflow-y-auto pr-1", children: [...selectedLead.timeline].reverse().map((event) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                        "div",
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Phone / WhatsApp" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "a",
                         {
-                          className: "p-2.5 rounded-xl bg-stone-50 border border-stone-100 text-xs space-y-1",
-                          children: [
-                            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
-                              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-[#7A2820]", children: event.action }),
-                              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400", children: event.date })
-                            ] }),
-                            event.comment && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-stone-700 text-[11px] leading-relaxed", children: event.comment }),
-                            /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-stone-500 italic", children: [
-                              "Logged by ",
-                              event.performed_by,
-                              " (",
-                              event.performed_by_role,
-                              ")"
-                            ] })
-                          ]
-                        },
-                        event.id
-                      )) })
+                          href: `https://wa.me/${selectedLead.student_phone.replace(/[^0-9]/g, "")}`,
+                          target: "_blank",
+                          rel: "noreferrer",
+                          className: "font-bold text-emerald-700 hover:underline flex items-center gap-1 truncate",
+                          children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: selectedLead.student_phone })
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Nationality & City" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-semibold text-stone-800", children: [
+                        selectedLead.nationality,
+                        " (",
+                        selectedLead.student_city || "N/A",
+                        ")"
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Passport / CNIC" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.passport_no || "Not submitted yet" })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Qualification" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.academic_qualification || "N/A" })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Academic Score" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-stone-900", children: selectedLead.academic_score || "N/A" })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "English Proficiency" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.english_test || "N/A" })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400 block font-semibold", children: "Study Gap" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold text-stone-800", children: selectedLead.study_gap_years ? `${selectedLead.study_gap_years} Years` : "None" })
                     ] })
                   ] })
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-stone-200", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
-                    canEditLead && /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                      "button",
-                      {
-                        type: "button",
-                        onClick: () => {
-                          const l = selectedLead;
-                          setSelectedLead(null);
-                          onEditLead(l);
-                        },
-                        className: "px-4 py-2 text-xs font-bold text-stone-700 hover:bg-stone-100 rounded-xl border border-stone-300 transition-colors flex items-center gap-1.5",
-                        children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(SquarePen, { className: "w-3.5 h-3.5" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Edit Full Lead Profile" })
-                        ]
-                      }
-                    ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between border-b border-stone-100 pb-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(BookOpen, { className: "w-4 h-4 text-[#A8382C]" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Requested Degree Program" })
+                    ] }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(
                       "button",
                       {
-                        type: "button",
                         onClick: () => {
-                          const templateMsg = WhatsAppService.getTemplateMessage("lead_summary", selectedLead);
-                          WhatsAppService.sendWhatsAppMessage({
-                            phoneNumber: selectedLead.student_phone,
-                            messageText: templateMsg,
-                            leadId: selectedLead.id
-                          });
-                          if (onSaveLead) {
-                            const formattedDate = (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", {
-                              day: "2-digit",
-                              month: "short",
-                              year: "numeric",
-                              hour: "2-digit",
-                              minute: "2-digit"
-                            });
-                            onSaveLead({
-                              ...selectedLead,
-                              last_whatsapp_sent: (/* @__PURE__ */ new Date()).toISOString(),
-                              timeline: [
-                                ...selectedLead.timeline,
-                                {
-                                  id: `tl_wa_${Date.now()}`,
-                                  date: formattedDate,
-                                  action: "WhatsApp Dispatched",
-                                  performed_by: currentUser.name || "Counselor",
-                                  performed_by_role: currentUser.role || "Staff",
-                                  comment: `Quick WhatsApp dispatched with Admission Assessment template`
-                                }
-                              ]
+                          const crs = courses.find((c) => c.course_id === selectedLead.course_id) || courses.find(
+                            (c) => {
+                              var _a, _b, _c, _d;
+                              return ((_a = c.course_name) == null ? void 0 : _a.trim().toLowerCase()) === ((_b = selectedLead.course_name) == null ? void 0 : _b.trim().toLowerCase()) && (!selectedLead.destination_country || ((_c = c.destination_country) == null ? void 0 : _c.trim().toLowerCase()) === ((_d = selectedLead.destination_country) == null ? void 0 : _d.trim().toLowerCase()));
+                            }
+                          ) || courses.find(
+                            (c) => {
+                              var _a, _b;
+                              return ((_a = c.course_name) == null ? void 0 : _a.trim().toLowerCase()) === ((_b = selectedLead.course_name) == null ? void 0 : _b.trim().toLowerCase());
+                            }
+                          );
+                          if (crs) {
+                            onSelectCourse(crs);
+                          } else {
+                            onSelectCourse({
+                              course_id: selectedLead.course_id || `course_${selectedLead.id}`,
+                              university_id: selectedLead.university_id || "uni_snapshot",
+                              course_name: selectedLead.course_name,
+                              program: selectedLead.program_level || "Postgraduate",
+                              duration: 1,
+                              duration_unit: "years",
+                              tuition_fee: selectedLead.tuition_fee,
+                              currency: selectedLead.currency,
+                              intake_months: [selectedLead.intake || "September 2026"],
+                              destination_country: selectedLead.destination_country,
+                              city: selectedLead.city,
+                              is_active: true,
+                              academic_requirements: { min_qualification: selectedLead.academic_qualification || "Degree" },
+                              english_requirements: { minimum_score: selectedLead.english_test || "6.0" }
                             });
                           }
                         },
-                        className: "px-4 py-2 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-xl border border-emerald-300 transition-colors flex items-center gap-1.5",
+                        className: "text-xs font-bold text-[#A8382C] hover:underline flex items-center gap-1",
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCircle, { className: "w-3.5 h-3.5 text-emerald-600" }),
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Send WhatsApp Assessment" })
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Full Specs" }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(ExternalLink, { className: "w-3 h-3" })
                         ]
                       }
                     )
                   ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("h4", { className: "font-display font-bold text-sm text-stone-900", children: selectedLead.course_name }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-xs text-stone-600 flex items-center gap-1.5 mt-0.5", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(Building2, { className: "w-3.5 h-3.5 text-[#A8382C]" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-semibold", children: selectedLead.university_name }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "·" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+                        selectedLead.city,
+                        ", ",
+                        selectedLead.destination_country
+                      ] })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-2 text-xs bg-[#FBF6F1] p-2.5 rounded-xl border border-stone-100", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-500 font-semibold block", children: "Annual Tuition" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-sm text-[#A8382C]", children: [
+                        selectedLead.currency,
+                        " ",
+                        selectedLead.tuition_fee.toLocaleString()
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-500 font-semibold block", children: "Target Intake" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-stone-800", children: selectedLead.intake })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-2 text-xs", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-stone-500 uppercase tracking-wider block", children: "Lead Assignment & Branch Ownership" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-bold text-stone-900 text-sm", children: selectedLead.counselor_name }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-stone-500 text-[11px]", children: [
+                        "Role: ",
+                        selectedLead.counselor_role,
+                        " · ",
+                        selectedLead.counselor_email
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "px-2.5 py-1 rounded-xl bg-[#FBF6F1] font-bold text-stone-800 border border-stone-200", children: selectedLead.franchise_name || "Head Office Central" })
+                  ] }),
+                  selectedLead.notes && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-3 bg-stone-50 rounded-xl border border-stone-100 mt-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-semibold text-stone-500 uppercase tracking-wider block", children: "Counselor Remarks:" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-stone-700 text-xs mt-0.5", children: selectedLead.notes })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 rounded-xl bg-white border border-stone-200 shadow-2xs space-y-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("h3", { className: "font-bold text-sm text-[#7A2820] flex items-center gap-2 border-b border-stone-100 pb-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { className: "w-4 h-4 text-[#A8382C]" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Activity Log & Counseling Timeline" })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { onSubmit: handleAddTimelineNote, className: "flex gap-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "input",
+                      {
+                        type: "text",
+                        placeholder: "Add counseling note or application update...",
+                        value: newTimelineComment,
+                        onChange: (e) => setNewTimelineComment(e.target.value),
+                        className: "flex-1 px-3 py-1.5 text-xs rounded-xl border border-stone-300 bg-white focus:outline-none focus:border-[#A8382C]"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "button",
+                      {
+                        type: "submit",
+                        disabled: !newTimelineComment.trim(),
+                        className: "px-3 py-1.5 bg-[#A8382C] text-white text-xs font-bold rounded-xl hover:bg-[#7A2820] disabled:opacity-50 disabled:cursor-not-allowed transition-colors",
+                        children: "Post Note"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-2.5 max-h-48 overflow-y-auto pr-1", children: [...selectedLead.timeline].reverse().map((event) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "div",
                     {
-                      type: "button",
-                      onClick: () => setSelectedLead(null),
-                      className: "px-6 py-2 text-xs font-bold text-white bg-stone-800 hover:bg-stone-900 rounded-xl shadow-xs transition-colors",
-                      children: "Close Dossier"
-                    }
-                  )
+                      className: "p-2.5 rounded-xl bg-stone-50 border border-stone-100 text-xs space-y-1",
+                      children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-[#7A2820]", children: event.action }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-stone-400", children: event.date })
+                        ] }),
+                        event.comment && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-stone-700 text-[11px] leading-relaxed", children: event.comment }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-stone-500 italic", children: [
+                          "Logged by ",
+                          event.performed_by,
+                          " (",
+                          event.performed_by_role,
+                          ")"
+                        ] })
+                      ]
+                    },
+                    event.id
+                  )) })
                 ] })
               ] })
-            ]
-          }
-        )
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-stone-200", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                canEditLead && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: () => {
+                      const l = selectedLead;
+                      setSelectedLead(null);
+                      onEditLead(l);
+                    },
+                    className: "px-4 py-2 text-xs font-bold text-stone-700 hover:bg-stone-100 rounded-xl border border-stone-300 transition-colors flex items-center gap-1.5",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(SquarePen, { className: "w-3.5 h-3.5" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Edit Full Lead Profile" })
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "button",
+                  {
+                    type: "button",
+                    onClick: () => {
+                      const templateMsg = WhatsAppService.getTemplateMessage("lead_summary", selectedLead);
+                      WhatsAppService.sendWhatsAppMessage({
+                        phoneNumber: selectedLead.student_phone,
+                        messageText: templateMsg,
+                        leadId: selectedLead.id
+                      });
+                      if (onSaveLead) {
+                        const formattedDate = (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
+                          hour: "2-digit",
+                          minute: "2-digit"
+                        });
+                        onSaveLead({
+                          ...selectedLead,
+                          last_whatsapp_sent: (/* @__PURE__ */ new Date()).toISOString(),
+                          timeline: [
+                            ...selectedLead.timeline,
+                            {
+                              id: `tl_wa_${Date.now()}`,
+                              date: formattedDate,
+                              action: "WhatsApp Dispatched",
+                              performed_by: currentUser.name || "Counselor",
+                              performed_by_role: currentUser.role || "Staff",
+                              comment: `Quick WhatsApp dispatched with Admission Assessment template`
+                            }
+                          ]
+                        });
+                      }
+                    },
+                    className: "px-4 py-2 text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-xl border border-emerald-300 transition-colors flex items-center gap-1.5",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCircle, { className: "w-3.5 h-3.5 text-emerald-600" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Send WhatsApp Assessment" })
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => setSelectedLead(null),
+                  className: "px-6 py-2 text-xs font-bold text-white bg-stone-800 hover:bg-stone-900 rounded-xl shadow-xs transition-colors",
+                  children: "Close Dossier"
+                }
+              )
+            ] })
+          ] })
+        ]
       }
-    )
+    ) })
   ] });
 };
 const UniversitiesView = ({
@@ -25118,7 +25126,7 @@ const UniversitiesView = ({
         uni.university_id
       );
     }) }),
-    uniToDelete && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
+    uniToDelete && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setUniToDelete(null), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "w-5 h-5" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
@@ -25171,7 +25179,7 @@ const UniversitiesView = ({
         )
       ] })
     ] }) }),
-    showBulkDeleteModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
+    showBulkDeleteModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setShowBulkDeleteModal(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "w-5 h-5" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
@@ -25639,7 +25647,7 @@ const CoursesView = ({
         );
       }) })
     ] }) }) }),
-    courseToDelete && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
+    courseToDelete && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setCourseToDelete(null), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "w-5 h-5" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
@@ -25686,7 +25694,7 @@ const CoursesView = ({
         )
       ] })
     ] }) }),
-    showBulkDeleteModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
+    showBulkDeleteModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setShowBulkDeleteModal(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "w-5 h-5" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
@@ -27541,7 +27549,7 @@ const CountriesView = ({
       },
       c.code
     )) }),
-    showModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden text-xs", children: [
+    showModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setShowModal(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden text-xs", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4 bg-[#7A2820] text-white flex items-center justify-between", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-display font-bold text-base", children: editingCountry ? "Edit Destination" : "Add New Study Destination" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -28977,7 +28985,7 @@ const UsersTeamView = ({
       },
       user.id
     )) }),
-    showModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in overflow-y-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] my-8", children: [
+    showModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setShowModal(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] my-8", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4 bg-gradient-to-r from-[#88221D] to-[#701C18] text-white flex items-center justify-between", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-display font-bold text-base", children: editingUser ? `Edit User Account — ${editingUser.name}` : isFranchiseAdmin ? "Add Franchise Counselor (Sub-User)" : "Add New User / Branch Manager" }),
@@ -29548,7 +29556,7 @@ const UsersTeamView = ({
         ] })
       ] })
     ] }) }),
-    deleteTargetUser && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] p-6 space-y-4", children: [
+    deleteTargetUser && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setDeleteTargetUser(null), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] p-6 space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-rose-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { className: "w-5 h-5 text-rose-600" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -30493,7 +30501,7 @@ const FranchisesView = ({
         )
       ] })
     ] }),
-    showFranchiseModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-lg max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512]", children: [
+    showFranchiseModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setShowFranchiseModal(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-lg max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512]", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4 bg-gradient-to-r from-[#701C18] to-[#9E2A23] text-white flex items-center justify-between flex-shrink-0", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Building, { className: "w-5 h-5 text-amber-300" }),
@@ -30916,7 +30924,7 @@ const FranchisesView = ({
         ] })
       ] })
     ] }) }),
-    showSubUserModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512]", children: [
+    showSubUserModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setShowSubUserModal(false), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512]", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-4 bg-gradient-to-r from-[#88221D] to-[#701C18] text-white flex items-center justify-between flex-shrink-0", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(UserPlus, { className: "w-5 h-5 text-amber-300" }),
@@ -31144,7 +31152,7 @@ const FranchisesView = ({
         ] })
       ] })
     ] }) }),
-    deleteConfirmTarget && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] p-6 space-y-4", children: [
+    deleteConfirmTarget && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { onBackdropClick: () => setDeleteConfirmTarget(null), children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] p-6 space-y-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-rose-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { className: "w-5 h-5 text-rose-600" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -34363,7 +34371,7 @@ ${leadMeta}` : leadMeta.trim();
         ] })
       ] })
     ] }),
-    showEmailConfirmModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
+    showEmailConfirmModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-red-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-red-50 rounded-xl", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "w-6 h-6" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -34410,7 +34418,7 @@ ${leadMeta}` : leadMeta.trim();
         )
       ] })
     ] }) }),
-    showWhatsappConfirmModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
+    showWhatsappConfirmModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-emerald-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-emerald-50 rounded-xl", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MessageCircle, { className: "w-6 h-6" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -34466,7 +34474,7 @@ ${leadMeta}` : leadMeta.trim();
         )
       ] })
     ] }) }),
-    showMeetConfirmModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
+    showMeetConfirmModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-blue-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-blue-50 rounded-xl", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Calendar, { className: "w-6 h-6" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -34519,7 +34527,7 @@ ${leadMeta}` : leadMeta.trim();
         )
       ] })
     ] }) }),
-    showCreateListModal && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
+    showCreateListModal && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-amber-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-amber-50 rounded-xl", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SquareCheckBig, { className: "w-6 h-6" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -34572,7 +34580,7 @@ ${leadMeta}` : leadMeta.trim();
         ] })
       ] })
     ] }) }),
-    editingTask && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
+    editingTask && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-amber-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-amber-50 rounded-xl", children: /* @__PURE__ */ jsxRuntimeExports.jsx(PenLine, { className: "w-6 h-6" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -34644,7 +34652,7 @@ ${leadMeta}` : leadMeta.trim();
         )
       ] })
     ] }) }),
-    showTaskDeleteModal && taskToDelete && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
+    showTaskDeleteModal && taskToDelete && /* @__PURE__ */ jsxRuntimeExports.jsx(ViewportOverlay, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-red-600", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-red-50 rounded-xl", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trash2, { className: "w-6 h-6" }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [

@@ -632,7 +632,7 @@
     z-index: 50;
   }
 
-  .z-60 {
+  .z-60, .z-\[60\] {
     z-index: 60;
   }
 
@@ -1462,6 +1462,10 @@
 
   .overflow-y-auto {
     overflow-y: auto;
+  }
+
+  .overscroll-contain {
+    overscroll-behavior: contain;
   }
 
   .rounded {
@@ -5077,12 +5081,10 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(6px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 

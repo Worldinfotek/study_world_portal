@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { University, CountryMaster } from '../types';
 import { countryCodeFromValue } from '../utils/countryRef';
+import { ViewportOverlay } from './ViewportOverlay';
 import { X, Save, AlertCircle } from 'lucide-react';
 
 interface UniversityFormModalProps {
@@ -115,7 +116,7 @@ export const UniversityFormModal: React.FC<UniversityFormModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto animate-fade-in">
+    <ViewportOverlay onBackdropClick={onClose}>
       <div
         className="relative w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden my-6 max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
@@ -311,6 +312,6 @@ export const UniversityFormModal: React.FC<UniversityFormModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </ViewportOverlay>
   );
 };

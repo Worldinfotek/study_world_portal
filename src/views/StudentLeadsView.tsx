@@ -10,6 +10,7 @@ import {
   Franchise,
   canViewLeadRequest,
 } from '../types';
+import { ViewportOverlay } from '../components/ViewportOverlay';
 import {
   UserPlus,
   Search,
@@ -900,10 +901,7 @@ export const StudentLeadsView: React.FC<StudentLeadsViewProps> = ({
 
       {/* Selected Lead Detail & Status Transition Drawer / Modal */}
       {selectedLead && (
-        <div
-          id="lead-detail-modal-backdrop"
-          className="fixed inset-0 z-50 overflow-y-auto bg-stone-900/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5"
-        >
+        <ViewportOverlay onBackdropClick={() => setSelectedLead(null)}>
           <div
             id="lead-detail-modal-container"
             className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[92vh] animate-scale-in"
@@ -1310,7 +1308,7 @@ export const StudentLeadsView: React.FC<StudentLeadsViewProps> = ({
               </div>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
     </div>
   );

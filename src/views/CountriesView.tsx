@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CountryMaster, UserAccount } from '../types';
 import { exportToCsv, printFormattedReport } from '../utils/exportUtils';
+import { ViewportOverlay } from '../components/ViewportOverlay';
 import {
   Globe2,
   Search,
@@ -259,7 +260,7 @@ export const CountriesView: React.FC<CountriesViewProps> = ({
 
       {/* Edit / Add Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+        <ViewportOverlay onBackdropClick={() => setShowModal(false)}>
           <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-stone-200 overflow-hidden text-xs">
             <div className="px-6 py-4 bg-[#7A2820] text-white flex items-center justify-between">
               <h3 className="font-display font-bold text-base">
@@ -376,7 +377,7 @@ export const CountriesView: React.FC<CountriesViewProps> = ({
               </div>
             </form>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
     </div>
   );

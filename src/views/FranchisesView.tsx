@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Franchise, UserAccount } from '../types';
 import { exportToCsv, printFormattedReport } from '../utils/exportUtils';
+import { ViewportOverlay } from '../components/ViewportOverlay';
 import { CrestLogo } from '../components/CrestLogo';
 import {
   DEFAULT_CITIES_DATA,
@@ -1108,7 +1109,7 @@ export const FranchisesView: React.FC<FranchisesViewProps> = ({
 
       {/* MODAL 1: ADD / EDIT FRANCHISE */}
       {showFranchiseModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+        <ViewportOverlay onBackdropClick={() => setShowFranchiseModal(false)}>
           <div className="w-full max-w-lg max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512]">
             <div className="px-6 py-4 bg-gradient-to-r from-[#701C18] to-[#9E2A23] text-white flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-2">
@@ -1507,12 +1508,12 @@ export const FranchisesView: React.FC<FranchisesViewProps> = ({
               </div>
             </form>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* MODAL 2: ADD / EDIT SUB-USER */}
       {showSubUserModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+        <ViewportOverlay onBackdropClick={() => setShowSubUserModal(false)}>
           <div className="w-full max-w-md max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512]">
             <div className="px-6 py-4 bg-gradient-to-r from-[#88221D] to-[#701C18] text-white flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-2">
@@ -1751,12 +1752,12 @@ export const FranchisesView: React.FC<FranchisesViewProps> = ({
               </div>
             </form>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* MODAL 3: ACTIVE DELETE CONFIRMATION MODAL */}
       {deleteConfirmTarget && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+        <ViewportOverlay onBackdropClick={() => setDeleteConfirmTarget(null)}>
           <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden text-xs text-[#241512] p-6 space-y-4">
             <div className="flex items-center gap-3 text-rose-600">
               <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center">
@@ -1800,7 +1801,7 @@ export const FranchisesView: React.FC<FranchisesViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
     </div>
   );

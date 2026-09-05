@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Course, University, ProgramLevel, DurationBucket, StudyMode, CourseStatus, MoiStatus } from '../types';
 import { X, Save, AlertCircle, Sparkles } from 'lucide-react';
+import { ViewportOverlay } from './ViewportOverlay';
 
 interface CourseFormModalProps {
   isOpen: boolean;
@@ -183,7 +184,7 @@ export const CourseFormModal: React.FC<CourseFormModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto animate-fade-in">
+    <ViewportOverlay onBackdropClick={onClose}>
       <div
         className="relative w-full max-w-3xl bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden my-6 max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
@@ -717,6 +718,6 @@ export const CourseFormModal: React.FC<CourseFormModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </ViewportOverlay>
   );
 };

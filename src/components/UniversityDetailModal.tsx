@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { University, Course } from '../types';
 import { printFormattedReport } from '../utils/exportUtils';
+import { ViewportOverlay } from './ViewportOverlay';
 import {
   X,
   MapPin,
@@ -348,7 +349,7 @@ export const UniversityDetailModal: React.FC<UniversityDetailModalProps> = ({
 
         {/* Delete Confirmation Modal */}
         {showDeleteConfirm && (
-          <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
+          <ViewportOverlay zClass="z-[60]" onBackdropClick={() => setShowDeleteConfirm(false)}>
             <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-stone-200 space-y-4">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center flex-shrink-0">
@@ -393,7 +394,7 @@ export const UniversityDetailModal: React.FC<UniversityDetailModalProps> = ({
                 </button>
               </div>
             </div>
-          </div>
+          </ViewportOverlay>
         )}
       </div>
     </div>

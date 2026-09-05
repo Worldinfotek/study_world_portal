@@ -41,6 +41,7 @@ import { WhatsAppService } from '../services/whatsappService';
 import { StorageService } from '../utils/storage';
 import { StudentLeadRequest, Course, University, UserAccount } from '../types';
 import { authHeaders } from '../lib/apiAuth';
+import { ViewportOverlay } from '../components/ViewportOverlay';
 
 interface GoogleWorkspaceViewProps {
   currentUser: UserAccount | null;
@@ -2284,7 +2285,7 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
           CONFIRMATION MODAL: GMAIL DISPATCH
       ========================================== */}
       {showEmailConfirmModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+        <ViewportOverlay>
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3 text-red-600">
               <div className="p-3 bg-red-50 rounded-xl">
@@ -2321,14 +2322,14 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* ==========================================
           CONFIRMATION MODAL: WHATSAPP DISPATCH
       ========================================== */}
       {showWhatsappConfirmModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+        <ViewportOverlay>
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3 text-emerald-600">
               <div className="p-3 bg-emerald-50 rounded-xl">
@@ -2375,14 +2376,14 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* ==========================================
           CONFIRMATION MODAL: CALENDAR & MEET
       ========================================== */}
       {showMeetConfirmModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+        <ViewportOverlay>
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3 text-blue-600">
               <div className="p-3 bg-blue-50 rounded-xl">
@@ -2416,14 +2417,14 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* ==========================================
           MODAL: CREATE NEW TASK LIST
       ========================================== */}
       {showCreateListModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+        <ViewportOverlay>
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3 text-amber-600">
               <div className="p-3 bg-amber-50 rounded-xl">
@@ -2474,14 +2475,14 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
               </div>
             </form>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* ==========================================
           MODAL: EDIT TASK DETAILS
       ========================================== */}
       {editingTask && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+        <ViewportOverlay>
           <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3 text-amber-600">
               <div className="p-3 bg-amber-50 rounded-xl">
@@ -2551,14 +2552,14 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
 
       {/* ==========================================
           MANDATORY CONFIRMATION MODAL: DELETE TASK
       ========================================== */}
       {showTaskDeleteModal && taskToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-4">
+        <ViewportOverlay>
           <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200 animate-in fade-in zoom-in-95">
             <div className="flex items-center gap-3 text-red-600">
               <div className="p-3 bg-red-50 rounded-xl">
@@ -2605,7 +2606,7 @@ export const GoogleWorkspaceView: React.FC<GoogleWorkspaceViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </ViewportOverlay>
       )}
     </div>
   );

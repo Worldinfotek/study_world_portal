@@ -9,6 +9,7 @@ import {
   LeadPriority,
   StudentLeadStatus,
 } from '../types';
+import { ViewportOverlay } from './ViewportOverlay';
 import {
   X,
   UserPlus,
@@ -488,10 +489,7 @@ export const StudentLeadModal: React.FC<StudentLeadModalProps> = ({
   };
 
   return (
-    <div
-      id="student-lead-modal-backdrop"
-      className="fixed inset-0 z-50 overflow-y-auto bg-stone-900/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5"
-    >
+    <ViewportOverlay onBackdropClick={onClose}>
       <div
         id="student-lead-modal-container"
         className="bg-white w-full max-w-4xl rounded-2xl shadow-2xl border border-stone-200 overflow-hidden flex flex-col max-h-[92vh] animate-scale-in"
@@ -968,6 +966,6 @@ export const StudentLeadModal: React.FC<StudentLeadModalProps> = ({
           </div>
         </form>
       </div>
-    </div>
+    </ViewportOverlay>
   );
 };
